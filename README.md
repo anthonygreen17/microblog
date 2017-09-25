@@ -1,5 +1,12 @@
-# Microblog
+# Microblog #
 
+My Microblog application is up and running at microblog.anthonygreen17.com
+
+I deployed a distillery release, but I did follow the "compromise" method outlined in the homework - I installed the neccesary tools (elixir, erlang, phoenix) on my VPS so that I was able to create the prod database via `MIX_ENV=prod mix ecto.create". After that, I was able to get my application up and running smoothly with `MIX_ENV=prod PORT=8000 ./bin/microblog start`.
+
+
+
+## Other pre-generated stuff, left here for reference ##
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
