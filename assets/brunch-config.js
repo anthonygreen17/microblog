@@ -49,10 +49,10 @@ exports.config = {
       ignore: [/vendor/]
     },
     sass: {
-    options: {
-      includePaths: ["node_modules/bootstrap/scss"],
+      options: {
+        includePaths: ["node_modules/bootstrap/scss"],
+      },
       precision: 8
-    }
     }
   },
 
