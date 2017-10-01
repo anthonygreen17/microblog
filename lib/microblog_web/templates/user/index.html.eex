@@ -16,9 +16,15 @@
       <td><%= user.username %></td>
 
       <td class="text-right">
-        <span><%= link "Show", to: user_path(@conn, :show, user), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Edit", to: user_path(@conn, :edit, user), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Delete", to: user_path(@conn, :delete, user), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+
+        <%= if @current_user == user do %>
+          <span><%= link "View Profile", to: user_path(@conn, :show, user), class: "btn btn-primary btn-xs" %></span>
+          <span><%= link "Edit Profile", to: user_path(@conn, :edit, user), class: "btn btn-default btn-xs" %></span>
+          <span><%= link "Delete Profile", to: user_path(@conn, :delete, user), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      <% else %>
+        <span><%= link "View Profile", to: user_path(@conn, :show, user), class: "btn btn-primary btn-xs" %></span>
+      <% end %>
+
       </td>
     </tr>
 <% end %>

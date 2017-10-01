@@ -30,9 +30,9 @@
         </ul>
       </div>
 
-      <%= if @user do %>
+      <%= if @current_user do %>
       <span class="text-light">
-        <%= @user.email %> |
+        <%= @current_user.email %> |
         <%= link("logout", to: session_path(@conn, :logout), method: :delete) %>
       </span>
     <% else %>
