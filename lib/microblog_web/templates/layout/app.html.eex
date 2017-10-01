@@ -14,7 +14,7 @@
 
   <body>
     <nav class="navbar navbar-dark bg-dark navbar-expand-md">
-      <a class="navbar-brand" href="#">Microblog</a>
+      <%= link("Microblog", to: page_path(@conn, :index)) %>
 
       <button class="navbar-toggler" type="button"
               data-toggle="collapse" data-target="#main-navbar">
