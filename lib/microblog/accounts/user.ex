@@ -11,6 +11,9 @@ defmodule Microblog.Accounts.User do
     timestamps()
   end
 
+  @required_fields ~w(email)
+  @optional_fields ~w(username)
+
   @doc false
   def changeset(%User{} = user, attrs) do
     user
