@@ -4,8 +4,7 @@
 
   <li>
     <strong>Username:</strong>
-  <!--  <%= Microblog.Accounts.get_user_by_id!(@message.id).username %> -->
-  	<% Anthony %>
+    <%= Microblog.Accounts.get_user_by_id!(@message.user_id).username %>
   </li>
 
   <li>

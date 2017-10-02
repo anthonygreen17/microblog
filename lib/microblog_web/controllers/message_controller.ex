@@ -18,7 +18,9 @@ defmodule MicroblogWeb.MessageController do
     # require IEx; IEx.pry
     case Posts.create_message(message_params) do
       {:ok, message} ->
-        require IEx; IEx.pry
+        # cart_item = NuMart.Repo.preload(cart_item, :product)
+        message = Microblog.Repo.preload(message, :user)
+        # require IEx; IEx.pry
         conn
         |> put_flash(:info, "Message created successfully.")
         |> redirect(to: message_path(conn, :show, message))
@@ -28,8 +30,7 @@ defmodule MicroblogWeb.MessageController do
   end
 
   def show(conn, %{"id" => id}) do
-    # user_id = get_session(conn, :current_user).id
-    message = Posts.get_message!(id) |> Microblog.Repo.preload(:user)
+    message = Posts.get_message!(id) |> Microblog.Repo.preload([:user])
     render(conn, "show.html", message: message)
   end
 
