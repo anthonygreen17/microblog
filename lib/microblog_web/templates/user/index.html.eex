@@ -39,10 +39,14 @@
           </h4>
           <p class="card-text">Matched user should include bio here...</p>
 
-          <%= form_for @conn, follow_path(@conn, :create), [as: "follow" ], fn f -> %>
-            <%= hidden_input f, :from_user_id, value: "17" %>
-            <%= hidden_input f, :to_user_id, value: "19" %>
-            <%= submit "Follow", class: "btn btn-primary" %>
+          <%= if (assigns[:current_user] != nil) and (@current_user != user)  do %>
+
+            <%= form_for @conn, follow_path(@conn, :create), [as: "follow" ], fn f -> %>
+              <%= hidden_input f, :from_user_id, value: @current_user.id %>
+              <%= hidden_input f, :to_user_id, value: user.id %>
+              <%= submit "Follow", class: "btn btn-primary" %>
+            <% end %>
+
           <% end %>
 
         </div>
