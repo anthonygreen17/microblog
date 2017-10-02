@@ -17,6 +17,7 @@ defmodule MicroblogWeb.FollowController do
   def create(conn, %{"follow" => follow_params}) do
     case Connections.create_follow(follow_params) do
       {:ok, follow} ->
+        require IEx; IEx.pry
         conn
         |> put_flash(:info, "Follow created successfully.")
         |> redirect(to: follow_path(conn, :show, follow))
@@ -27,6 +28,7 @@ defmodule MicroblogWeb.FollowController do
 
   def show(conn, %{"id" => id}) do
     follow = Connections.get_follow!(id)
+    # require IEx; IEx.pry
     render(conn, "show.html", follow: follow)
   end
 
