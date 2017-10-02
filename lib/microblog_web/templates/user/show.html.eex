@@ -19,7 +19,7 @@
   <div class="row top-pad-small justify-content-center">
     <div class="col-md-auto">
 
-      <%= if @current_user == @user do %>
+      <%= if @current_user.id == @user.id do %>
 
         <%= button("Create Post", to: message_path(@conn, :new), method: "get", class: "btn btn-primary") %>
         <%= link "Delete Profile", to: user_path(@conn, :delete, @user), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
@@ -28,7 +28,7 @@
       <% else %>
 
         <%# Comments - they are discarded from source %>
-        <%= if (assigns[:current_user] != nil) and (@current_user != @user)  do %>
+        <%= if (assigns[:current_user] != nil) and (@current_user.id != @user.id)  do %>
 
             <%= if Microblog.Connections.user_is_following_user?(@current_user.id, @user.id) do %>
 
