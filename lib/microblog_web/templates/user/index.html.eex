@@ -38,7 +38,7 @@
             </small>  
           </h4>
           <p class="card-text">Matched user should include bio here...</p>
-          <button type="button" href="#" class="btn btn-primary">Follow</button>
+          <%= link "Follow", to: follow_path(@conn, :new), class: "btn btn-primary" %>
         </div>
       </div>
 
