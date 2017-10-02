@@ -38,6 +38,7 @@
             </small>  
           </h4>
           <p class="card-text">Matched user should include bio here...</p>
+          <button type="button" href="#" class="btn btn-primary">Follow</button>
         </div>
       </div>
 
