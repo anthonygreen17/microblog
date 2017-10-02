@@ -101,4 +101,13 @@ defmodule Microblog.Connections do
   def change_follow(%Follow{} = follow) do
     Follow.changeset(follow, %{})
   end
+
+  def user_is_following_user?(user_from, user_to) do
+    Repo.get_by(Follow, from_user_id: user_from, to_user_id: user_to)
+  end
+
+  def get_follow_user_to_user!(user_from, user_to) do
+    Repo.get_by(Follow, from_user_id: user_from, to_user_id: user_to)
+  end
+
 end
