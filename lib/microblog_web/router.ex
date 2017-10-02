@@ -24,6 +24,8 @@ defmodule MicroblogWeb.Router do
     resources "/users", UserController
     post "/sessions", SessionController, :login
     delete "/sessions", SessionController, :logout
+
+    resources "/follows", FollowController
   end
 
   # Other scopes may use custom stacks.
