@@ -2,6 +2,7 @@
 <div class="container">
 
   <!-- this card will contain the user's picture -->
+
   <div class="card text-center" id="user-show-header" >
     <img class="card-img-top img-thumbnail" src="/images/rick_morty.jpeg" alt="profile picture here">
     <div class="card-body">
@@ -60,17 +61,25 @@
   <div class="row bottom-pad">
     <div class="col">
       <h2>Feed</h2>
+      <p class="left-pad">This will eventually show all posts which the user themselves has posted, as well as posts
+      in which the user is mentioned.</p>
     </div>
   </div>
 
+  <div class="row bottom-pad">
+    <div class="col">
+      <h2>Following: <%= Enum.count(@user.followed_users) %></h2>
 
-  <p>Following: <%= Enum.count(@user.followed_users) %></p>
-  <%= for f <- @user.followed_users do %>
+      <%= for f <- @user.followed_users do %>
+        
+        <small class="text-muted">
+            @<%= link Microblog.Accounts.get_user_by_id!(f.to_user_id).username, to: user_path(@conn, :show, Microblog.Accounts.get_user_by_id!(f.to_user_id)), class: "text-muted" %>
+            </small>
+        <br />
+      <% end %>
 
-    <p><%= Microblog.Accounts.get_user_by_id!(f.to_user_id).username %></p>
-
-
-  <% end %>
+    </div>
+  </div>
 
   <span><%= link "Search Users", to: user_path(@conn, :index), class: "btn btn-xs btn-primary" %></span>
 </div>
