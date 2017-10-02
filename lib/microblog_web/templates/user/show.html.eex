@@ -63,5 +63,14 @@
     </div>
   </div>
 
+
+  <p>Following: <%= Enum.count(@user.followed_users) %></p>
+  <%= for f <- @user.followed_users do %>
+
+    <p><%= Microblog.Accounts.get_user_by_id!(f.to_user_id).username %></p>
+
+
+  <% end %>
+
   <span><%= link "Search Users", to: user_path(@conn, :index), class: "btn btn-xs btn-primary" %></span>
 </div>
