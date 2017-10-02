@@ -3,7 +3,7 @@
 
   <!-- this card will contain the user's picture -->
   <div class="card text-center" id="user-show-header" >
-    <img class="card-img-top img-thumbnail" src="./image/pff_headshot_small.jpg" alt="profile picture here">
+    <img class="card-img-top img-thumbnail" src="/images/rick_morty.jpeg" alt="profile picture here">
     <div class="card-body">
 
       <h4 class="card-title text-muted">
@@ -15,14 +15,14 @@
     </div>
   </div>
 
-  <!-- 2 buttons below the card for follow/message -->
+  <!-- button below the card for follow/create_message -->
   <div class="row top-pad-small justify-content-center">
     <div class="col-md-auto">
-      <button type="button" href="#" class="btn btn-primary">Follow</button>
       <%= if @current_user == @user do %>
         <%= button("Create Post", to: message_path(@conn, :new), method: "get", class: "btn btn-primary") %>
+      <% else %>
+        <button type="button" href="#" class="btn btn-primary">Follow</button>
       <% end %>
-      <%# <button type="button" href="#" class="btn btn-primary">Follow</button> %>
     </div>
   </div>
 
@@ -33,7 +33,8 @@
     </div>
   </div>
 
+<span><%= link "Search Users", to: user_path(@conn, :index), class: "btn btn-xs btn-primary" %></span>
 <%= if @current_user == @user do %>
-	<%= link "Edit Profile", to: user_path(@conn, :edit, @user) %>
+	<%= link "Edit Profile", to: user_path(@conn, :edit, @user), class: "btn btn-xs btn-primary" %>
+  <%= link "Delete Profile", to: user_path(@conn, :delete, @user), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
 <% end %>
-<span><%= link "Search Users", to: user_path(@conn, :index) %></span>
