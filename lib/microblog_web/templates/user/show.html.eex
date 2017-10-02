@@ -20,6 +20,8 @@
     <div class="col-md-auto">
       <%= if @current_user == @user do %>
         <%= button("Create Post", to: message_path(@conn, :new), method: "get", class: "btn btn-primary") %>
+        <%= link "Delete Profile", to: user_path(@conn, :delete, @user), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+        <%= link "Edit Profile", to: user_path(@conn, :edit, @user), class: "btn btn-xs btn-primary" %>
       <% else %>
         <button type="button" href="#" class="btn btn-primary">Follow</button>
       <% end %>
@@ -27,14 +29,12 @@
   </div>
 
   <!-- display the user's feed below their info -->
+
   <div class="row bottom-pad">
     <div class="col">
       <h2>Feed</h2>
     </div>
   </div>
 
-<span><%= link "Search Users", to: user_path(@conn, :index), class: "btn btn-xs btn-primary" %></span>
-<%= if @current_user == @user do %>
-	<%= link "Edit Profile", to: user_path(@conn, :edit, @user), class: "btn btn-xs btn-primary" %>
-  <%= link "Delete Profile", to: user_path(@conn, :delete, @user), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
-<% end %>
+  <span><%= link "Search Users", to: user_path(@conn, :index), class: "btn btn-xs btn-primary" %></span>
+</div>

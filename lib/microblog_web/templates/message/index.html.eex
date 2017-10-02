@@ -6,7 +6,7 @@
     </div>
   </div>
 
-<%= for message <- @messages do %>
+<%= for message <- Enum.reverse(@messages) do %>
 
   <div class="card bottom-pad">
     <div class="card-body">
