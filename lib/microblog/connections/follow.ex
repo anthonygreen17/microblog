@@ -15,7 +15,7 @@ defmodule Microblog.Connections.Follow do
   @doc false
   def changeset(%Follow{} = follow, attrs) do
     follow
-    |> cast(attrs, [])
-    |> validate_required([])
+    |> cast(attrs, [:from_user_id, :to_user_id])
+    |> validate_required([:from_user_id, :to_user_id])
   end
 end
