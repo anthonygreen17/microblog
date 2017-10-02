@@ -13,8 +13,9 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-dark bg-dark navbar-expand-md">
-      <%= link("Microblog", to: page_path(@conn, :index)) %>
+
+    <nav class="navbar navbar-dark bg-secondary navbar-expand-md">
+      <%= link("Home", to: page_path(@conn, :index)) %>
 
       <button class="navbar-toggler" type="button"
               data-toggle="collapse" data-target="#main-navbar">
