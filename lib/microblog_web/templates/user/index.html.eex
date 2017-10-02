@@ -1,34 +1,26 @@
 <h2>Listing Users</h2>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Email</th>
-      <th>Username</th>
-
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
 <%= for user <- @users do %>
-    <tr>
-      <td><%= user.email %></td>
-      <td><%= user.username %></td>
 
-      <td class="text-right">
+  
+  <div class="card bottom-pad">
+    <div class="card-body">
 
-        <%= if @current_user == user do %>
-          <span><%= link "View Profile", to: user_path(@conn, :show, user), class: "btn btn-primary btn-xs" %></span>
-          <span><%= link "Edit Profile", to: user_path(@conn, :edit, user), class: "btn btn-default btn-xs" %></span>
-          <span><%= link "Delete Profile", to: user_path(@conn, :delete, user), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
-      <% else %>
-        <span><%= link "View Profile", to: user_path(@conn, :show, user), class: "btn btn-primary btn-xs" %></span>
-      <% end %>
+      <div class="row">
+        <div class="post-thumbnail-pic">
+          <small>User Photo Here</small>
+        </div>
 
-      </td>
-    </tr>
+        <div class="col-md-auto justify-content-left">
+          <h4 class="card-title">
+            <small class="text-muted">@<%=user.username%></small>  
+          </h4>
+          <p class="card-text">Matched user should include bio here...</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
 <% end %>
-  </tbody>
-</table>
 
 <span><%= link "New User", to: user_path(@conn, :new) %></span>

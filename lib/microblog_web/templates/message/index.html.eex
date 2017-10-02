@@ -1,29 +1,41 @@
 <h2>Listing Messages</h2>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>User</th>
-      <th>Body</th>
+<div class="container">
 
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
+  <div class="row bottom-pad top-pad">
+    <div class="col">
+      <h2>Feed</h2>
+    </div>
+  </div>
+
 <%= for message <- @messages do %>
-    <tr>
-      <td><%= Microblog.Accounts.get_user_by_id!(message.user_id).username %></td>
-      <td><%= message.body %></td>
 
-      <td class="text-right">
-        <span><%= link "Show", to: message_path(@conn, :show, message), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Edit", to: message_path(@conn, :edit, message), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Delete", to: message_path(@conn, :delete, message), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
-      </td>
-    </tr>
+  <div class="card bottom-pad">
+    <div class="card-body">
+
+      <div class="row">
+        <div class="post-thumbnail-pic">
+          <small>User Photo Here</small>
+        </div>
+
+        <div class="col-md-auto justify-content-left">
+          <h4 class="card-title">
+            <small class="text-muted">
+              @<%= Microblog.Accounts.get_user_by_id!(message.user_id).username %>
+            </small>  
+          </h4>
+          <p class="card-text"><%= message.body %><br>...</p>
+          <button type="button" href="#" class="btn btn-danger">Like</button>
+          <button type="button" href="#" class="btn btn-primary">Share</button>
+          <small class="text-muted">Some time ago...</small>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
 <% end %>
-  </tbody>
-</table>
+</div>  <!-- container -->
 
 <span><%= link "New Message", to: message_path(@conn, :new) %></span>
 
