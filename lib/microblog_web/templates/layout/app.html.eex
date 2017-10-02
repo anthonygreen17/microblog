@@ -27,6 +27,12 @@
             <%= link "Users", to: user_path(@conn, :index),
                                  class: "nav-link" %>
           </li>
+          <%= if @current_user do %>
+            <li class="nav-item active">
+              <%= link "My Profile", to: user_path(@conn, :show, @current_user.id),
+                                   class: "nav-link" %>
+            </li>
+          <% end %>
         </ul>
       </div>
 
