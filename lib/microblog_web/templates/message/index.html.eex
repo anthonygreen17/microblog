@@ -3,7 +3,7 @@
 <table class="table">
   <thead>
     <tr>
-      <th>UserId</th>
+      <th>User</th>
       <th>Body</th>
 
       <th></th>
@@ -12,7 +12,7 @@
   <tbody>
 <%= for message <- @messages do %>
     <tr>
-      <td><%= message.user_id %></td>
+      <td><%= Microblog.Accounts.get_user_by_id!(message.user_id).username %></td>
       <td><%= message.body %></td>
 
       <td class="text-right">

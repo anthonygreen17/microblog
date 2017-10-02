@@ -28,9 +28,9 @@ defmodule MicroblogWeb.MessageController do
   end
 
   def show(conn, %{"id" => id}) do
-    message = Posts.get_message!(id)
-    user_id = get_session(conn, :current_user).id
-    render(conn, "show.html", message: message, user_id: user_id)
+    # user_id = get_session(conn, :current_user).id
+    message = Posts.get_message!(id) |> Microblog.Repo.preload(:user)
+    render(conn, "show.html", message: message)
   end
 
   def edit(conn, %{"id" => id}) do
