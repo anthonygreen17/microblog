@@ -1,4 +1,24 @@
-<h2>Listing Users</h2>
+
+<div class="container">
+
+  <div class="row justify-content-center top-pad">
+    <div class="col-lg-6">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search for users..." aria-label="Search for users...">
+        <span class="input-group-btn">
+          <button class="btn btn-secondary" type="button">Go!</button>
+        </span>
+      </div>
+    </div>
+  </div>
+  
+
+  <!-- display the results feed below the search bar -->
+  <div class="row bottom-pad">
+    <div class="col">
+      <h2>Results</h2>
+    </div>
+  </div>
 
 <%= for user <- @users do %>
 
@@ -13,7 +33,9 @@
 
         <div class="col-md-auto justify-content-left">
           <h4 class="card-title">
-            <small class="text-muted">@<%=user.username%></small>  
+            <small class="text-muted">
+            @<%= link user.username, to: user_path(@conn, :show, user), class: "text-muted" %>
+            </small>  
           </h4>
           <p class="card-text">Matched user should include bio here...</p>
         </div>
@@ -22,5 +44,7 @@
     </div>
   </div>
 <% end %>
+
+</div> <!-- container -->
 
 <span><%= link "New User", to: user_path(@conn, :new) %></span>
