@@ -3,7 +3,7 @@
 <table class="table">
   <thead>
     <tr>
-      <th>Username</th>
+      <th>UserId</th>
       <th>Body</th>
 
       <th></th>
@@ -12,7 +12,7 @@
   <tbody>
 <%= for message <- @messages do %>
     <tr>
-      <td><%= message.username %></td>
+      <td><%= message.user_id %></td>
       <td><%= message.body %></td>
 
       <td class="text-right">
@@ -26,3 +26,4 @@
 </table>
 
 <span><%= link "New Message", to: message_path(@conn, :new) %></span>
+

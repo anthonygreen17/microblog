@@ -11,12 +11,14 @@ defmodule MicroblogWeb.MessageController do
 
   def new(conn, _params) do
     changeset = Posts.change_message(%Message{})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, "new.html", changeset: changeset, user_id: conn.assigns[:current_user].id)
   end
 
   def create(conn, %{"message" => message_params}) do
+    # require IEx; IEx.pry
     case Posts.create_message(message_params) do
       {:ok, message} ->
+        require IEx; IEx.pry
         conn
         |> put_flash(:info, "Message created successfully.")
         |> redirect(to: message_path(conn, :show, message))

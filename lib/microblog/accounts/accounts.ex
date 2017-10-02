@@ -110,4 +110,8 @@ defmodule Microblog.Accounts do
     Repo.get_by(User, username: username)
   end
 
+  def get_user_by_id!(id) do
+    Repo.get_by(User, id: id)
+  end
+
 end
