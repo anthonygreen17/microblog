@@ -32,6 +32,10 @@
               <%= link "My Profile", to: user_path(@conn, :show, @current_user.id),
                                    class: "nav-link" %>
             </li>
+            <li class="nav-item active">
+              <%= link "Create Post", to: message_path(@conn, :new),
+                                   class: "nav-link" %>
+            </li>
           <% end %>
         </ul>
       </div>
