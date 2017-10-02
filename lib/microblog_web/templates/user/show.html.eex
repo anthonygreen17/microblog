@@ -14,5 +14,7 @@
 
 </ul>
 
-<span><%= link "Edit", to: user_path(@conn, :edit, @user) %></span>
-<span><%= link "Back", to: user_path(@conn, :index) %></span>
+<%= if @current_user == @user do %>
+	<%= link "Edit Profile", to: user_path(@conn, :edit, @user) %>
+<% end %>
+<span><%= link "Search Users", to: user_path(@conn, :index) %></span>
