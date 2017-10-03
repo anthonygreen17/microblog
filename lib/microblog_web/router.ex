@@ -10,6 +10,7 @@ defmodule MicroblogWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :fetch_user
+    plug NavigationHistory.Tracker
   end
 
   pipeline :api do
@@ -24,6 +25,8 @@ defmodule MicroblogWeb.Router do
     resources "/users", UserController
     post "/sessions", SessionController, :login
     delete "/sessions", SessionController, :logout
+
+    resources "/follows", FollowController, except: [:get, :show, :index]
   end
 
   # Other scopes may use custom stacks.
