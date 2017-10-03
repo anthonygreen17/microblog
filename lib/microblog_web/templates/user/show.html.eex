@@ -20,7 +20,7 @@
   <div class="row top-pad-small justify-content-center">
     <div class="col-md-auto">
 
-      <%= if @current_user.id == @user.id do %>
+      <%= if (assigns[:current_user] != nil) and (@current_user.id == @user.id) do %>
 
         <%= button("Create Post", to: message_path(@conn, :new), method: "get", class: "btn btn-primary") %>
         <%= link "Delete Profile", to: user_path(@conn, :delete, @user), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
@@ -82,7 +82,11 @@
                 </h4>
                 <p class="card-text"><%= message.body %><br>...</p>
 
-                <%= link "Delete Post", to: message_path(@conn, :delete, message.id), method: :delete, data: [confirm: "Delete this post?"], class: "btn btn-danger btn-xs" %>
+                <%= if (assigns[:current_user] != nil) and (@current_user.id == @user.id) do %>
+
+                  <%= link "Delete Post", to: message_path(@conn, :delete, message.id), method: :delete, data: [confirm: "Delete this post?"], class: "btn btn-danger btn-xs" %>
+
+                <% end %>
 
                 <small class="text-muted">Some time ago...</small>
               </div>
