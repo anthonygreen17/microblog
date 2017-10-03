@@ -23,8 +23,17 @@
             </small>  
           </h4>
           <p class="card-text"><%= message.body %><br>...</p>
-          <button type="button" href="#" class="btn btn-danger">Like</button>
-          <button type="button" href="#" class="btn btn-primary">Share</button>
+
+          <%= if (@current_user.id == message.user_id) do %>
+
+            <%= link "Delete Post", to: message_path(@conn, :delete, message.id), method: :delete, data: [confirm: "Delete this post?"], class: "btn btn-danger btn-xs" %>
+
+          <% else %>
+
+            <button type="button" href="#" class="btn btn-danger">Like</button>
+            <button type="button" href="#" class="btn btn-primary">Share</button>
+
+          <% end %>
           <small class="text-muted">Some time ago...</small>
         </div>
 
