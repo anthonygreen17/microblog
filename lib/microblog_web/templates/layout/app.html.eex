@@ -59,6 +59,7 @@
       <%= form_for @conn, session_path(@conn, :login), [as: "user", class: "form-inline w-75"], fn f -> %>
         <%= text_input f, :username_or_email,  placeholder: "username/email", class: "form-control" %>
         <%= submit "Log in", class: "btn btn-primary" %>
+        <%= link "Sign Up", to: user_path(@conn, :new), class: "btn btn-primary" %>
       <% end %>
     <% end %>
     </nav>

@@ -19,7 +19,7 @@ defmodule Microblog.Accounts.User do
   @doc false
   def changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:email, :username, :followed_users, :messages])
+    |> cast(attrs, [:email, :username])
     |> validate_required([:email, :username])
   end
 end
