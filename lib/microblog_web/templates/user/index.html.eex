@@ -21,7 +21,6 @@
   </div>
 
 <%= for user <- @users do %>
-
   
   <div class="card bottom-pad">
     <div class="card-body">

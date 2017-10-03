@@ -63,6 +63,35 @@
       <h2>Feed</h2>
       <p class="left-pad">This will eventually show all posts which the user themselves has posted, as well as posts
       in which the user is mentioned.</p>
+
+      <%= for message <- Enum.reverse(@user.messages) do %>
+
+        <div class="card bottom-pad">
+          <div class="card-body">
+
+            <div class="row">
+              <div class="post-thumbnail-pic">
+                <small>User Photo Here</small>
+              </div>
+
+              <div class="col-md-auto justify-content-left">
+                <h4 class="card-title">
+                  <small class="text-muted">
+                    @<%= link Microblog.Accounts.get_user_by_id!(message.user_id).username, to: user_path(@conn, :show, Microblog.Accounts.get_user_by_id!(message.user_id)), class: "text-muted" %>
+                  </small>  
+                </h4>
+                <p class="card-text"><%= message.body %><br>...</p>
+                <button type="button" href="#" class="btn btn-danger">Like</button>
+                <small class="text-muted">Some time ago...</small>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+<% end %>
+
+
     </div>
   </div>
 
