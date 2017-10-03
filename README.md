@@ -43,6 +43,7 @@ Things that aren't so good:
 - still need proper timestamps for posts
 - need to properly handle edge cases (ie: user's feed when they have no posts and don't follow anyone)
 - better app handling of a user that isnt logged in
+- after creating a new user, that user should be logged in as the current user
 
 
 
