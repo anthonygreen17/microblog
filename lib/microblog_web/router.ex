@@ -1,12 +1,16 @@
 defmodule MicroblogWeb.Router do
   use MicroblogWeb, :router
 
+  import MicroblogWeb.Plugs
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :fetch_user
+    plug NavigationHistory.Tracker
   end
 
   pipeline :api do
@@ -18,6 +22,11 @@ defmodule MicroblogWeb.Router do
 
     get "/", PageController, :index
     resources "/messages", MessageController
+    resources "/users", UserController
+    post "/sessions", SessionController, :login
+    delete "/sessions", SessionController, :logout
+
+    resources "/follows", FollowController, except: [:get, :show, :index]
   end
 
   # Other scopes may use custom stacks.

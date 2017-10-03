@@ -11,12 +11,16 @@ defmodule MicroblogWeb.MessageController do
 
   def new(conn, _params) do
     changeset = Posts.change_message(%Message{})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, "new.html", changeset: changeset, user_id: conn.assigns[:current_user].id)
   end
 
   def create(conn, %{"message" => message_params}) do
+    # require IEx; IEx.pry
     case Posts.create_message(message_params) do
       {:ok, message} ->
+        # cart_item = NuMart.Repo.preload(cart_item, :product)
+        message = Microblog.Repo.preload(message, :user)
+        # require IEx; IEx.pry
         conn
         |> put_flash(:info, "Message created successfully.")
         |> redirect(to: message_path(conn, :show, message))
@@ -26,7 +30,7 @@ defmodule MicroblogWeb.MessageController do
   end
 
   def show(conn, %{"id" => id}) do
-    message = Posts.get_message!(id)
+    message = Posts.get_message!(id) |> Microblog.Repo.preload([:user])
     render(conn, "show.html", message: message)
   end
 
@@ -55,6 +59,6 @@ defmodule MicroblogWeb.MessageController do
 
     conn
     |> put_flash(:info, "Message deleted successfully.")
-    |> redirect(to: message_path(conn, :index))
+    |> redirect(to: NavigationHistory.last_path(conn))
   end
 end

@@ -5,19 +5,26 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= label f, :username, class: "control-label" %>
-    <%= text_input f, :username, class: "form-control" %>
-    <%= error_tag f, :username %>
+  <div class="container">
+    <!-- first row will contain username and user's full name -->
+    <div class="row top-pad">
+      <div class="col-md-12">
+        <h2> Create Post
+          <small class="text-muted">@<%= @current_user.username %></small>  
+        </h2>
+      </div>
+    </div>
+
+    <%= hidden_input f, :user_id, value: @current_user.id %>
+
+    <div class="form-group">
+      <%= textarea f, :body, class: "form-control", placeholder: "Enter post here..." %>
+      <%= error_tag f, :body %>
+    </div>
+
+    <div class="form-group">
+      <%= submit "Submit", class: "btn btn-primary" %>
+    </div>
   </div>
 
-  <div class="form-group">
-    <%= label f, :body, class: "control-label" %>
-    <%= textarea f, :body, class: "form-control" %>
-    <%= error_tag f, :body %>
-  </div>
-
-  <div class="form-group">
-    <%= submit "Submit", class: "btn btn-primary" %>
-  </div>
 <% end %>
