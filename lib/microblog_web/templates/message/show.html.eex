@@ -1,18 +1,26 @@
-<h2>Show Message</h2>
+<div class="card bottom-pad">
+  <div class="card-body">
 
-<ul>
+    <div class="row">
+      <div class="post-thumbnail-pic">
+        <small>User Photo Here</small>
+      </div>
 
-  <li>
-    <strong>Username:</strong>
-    <%= Microblog.Accounts.get_user_by_id!(@message.user_id).username %>
-  </li>
+      <div class="col-md-auto justify-content-left">
+        <h4 class="card-title">
+          <small class="text-muted">
+            @<%= link Microblog.Accounts.get_user_by_id!(@message.user_id).username, to: user_path(@conn, :show, Microblog.Accounts.get_user_by_id!(@message.user_id)), class: "text-muted" %>
+          </small>  
+        </h4>
+        <p class="card-text"><%= @message.body %><br>...</p>
+        <button type="button" href="#" class="btn btn-danger">Like</button>
+        <button type="button" href="#" class="btn btn-primary">Share</button>
+        <small class="text-muted">Some time ago...</small>
+      </div>
 
-  <li>
-    <strong>Body:</strong>
-    <%= @message.body %>
-  </li>
-
-</ul>
+    </div>
+  </div>
+</div>
 
 <span><%= link "Edit", to: message_path(@conn, :edit, @message) %></span>
 <span><%= link "Back", to: message_path(@conn, :index) %></span>
