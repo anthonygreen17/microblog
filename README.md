@@ -36,10 +36,13 @@ I think my app is functioning fairly well at this point. Here's some features:
 - a user has the option to delete their own posts from their homepage as well as from the post index page. The user can like or share a post that is not their own
 - navigation history is used to redirect the user to their most recent page, where appropriate (deleting posts, unfollowing users, etc)
 - the follow /get and /show pages are restricted, cause it really doesnt make sense for them to be there
+- a feed is implemented, which is a page in which a user can view all of their own posts as well as the posts of people that they follow
 
-Here's some stuff that isn't perfect yet...
+Things that aren't so good:
 
-- a user "feed" page has not yet been implemented. This page should be a link in the navbar which shows a user only the posts from users that they follow.
+- still need proper timestamps for posts
+- need to properly handle edge cases (ie: user's feed when they have no posts and don't follow anyone)
+
 
 
 ## Other pre-generated stuff, left here for reference ##

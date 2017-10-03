@@ -8,6 +8,8 @@
 
 <%= for message <- Enum.reverse(@messages) do %>
 
+<%= if ( (Microblog.Connections.user_is_following_user?(@current_user.id, message.user_id) != nil) or message.user_id == @current_user.id) do %>
+
   <div class="card bottom-pad">
     <div class="card-body">
 
@@ -41,7 +43,9 @@
     </div>
   </div>
 
-<% end %>
+<% end %> <!-- if statement -->
+
+<% end %> <!-- message loop -->
 </div>  <!-- container -->
 
 <span><%= link "New Message", to: message_path(@conn, :new) %></span>
