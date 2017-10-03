@@ -81,7 +81,9 @@
                   </small>  
                 </h4>
                 <p class="card-text"><%= message.body %><br>...</p>
-                <button type="button" href="#" class="btn btn-danger">Like</button>
+
+                <%= link "Delete Post", to: message_path(@conn, :delete, message.id), method: :delete, data: [confirm: "Delete this post?"], class: "btn btn-danger btn-xs" %>
+                
                 <small class="text-muted">Some time ago...</small>
               </div>
 
