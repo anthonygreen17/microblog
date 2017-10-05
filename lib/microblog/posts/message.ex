@@ -8,6 +8,8 @@ defmodule Microblog.Posts.Message do
     field :body, :string
     belongs_to :user, Microblog.Accounts.User
 
+    has_many :likes, Microblog.Connections.Like, foreign_key: :message_id
+
     timestamps()
   end
 
