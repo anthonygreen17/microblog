@@ -32,9 +32,17 @@
 
       <div class="row">
 
-        <div class="col-sm-1 left-pad-likes top-pad-likes">
-            <small class="text-muted">Likes: <%= Microblog.Connections.get_number_of_likes(message.id)%></small>
+
+        <div id="number-likes" data-path="<%= like_path(@conn, :index) %>">
+          &nbsp;
         </div>
+
+      <%# this is the code that we want to execute to put the number of likes on the post %>
+        <script id="render-number-likes-template" type="text/x-handlebars-template">
+          <div class="col-sm-1 left-pad-likes top-pad-likes">
+              <small class="text-muted">Likes: {{num_likes}}</small>
+          </div>
+        </script>
 
         <div class="col-md-auto justify-content-left">
 
