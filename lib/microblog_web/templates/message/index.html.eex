@@ -26,6 +26,18 @@
           </h4>
           <p class="card-text"><%= message.body %><br>...</p>
 
+        </div>
+
+      </div> <!-- row -->
+
+      <div class="row">
+
+        <div class="col-sm-1 left-pad-likes top-pad-likes">
+            <small class="text-muted">Likes: <%= Microblog.Connections.get_number_of_likes(message.id)%></small>
+        </div>
+
+        <div class="col-md-auto justify-content-left">
+
           <%= if (@current_user.id == message.user_id) do %>
 
             <%= link "Delete Post", to: message_path(@conn, :delete, message.id), method: :delete, data: [confirm: "Delete this post?"], class: "btn btn-danger btn-xs" %>
@@ -43,9 +55,11 @@
 
           <% end %>
           <small class="text-muted">Some time ago...</small>
-        </div>
 
+        </div>
+        
       </div>
+
     </div>
   </div>
 

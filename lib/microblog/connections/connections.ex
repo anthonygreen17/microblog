@@ -206,4 +206,12 @@ defmodule Microblog.Connections do
   def change_like(%Like{} = like) do
     Like.changeset(like, %{})
   end
+
+  def get_number_of_likes(message_id) do
+    res = Repo.get_by(Like, to_message_id: message_id)
+    case res do
+      nil -> 0
+      true -> length res
+    end
+  end
 end
