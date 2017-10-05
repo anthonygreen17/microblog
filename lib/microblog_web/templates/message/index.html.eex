@@ -32,8 +32,14 @@
 
           <% else %>
 
-            <button type="button" href="#" class="btn btn-danger">Like</button>
-            <button type="button" href="#" class="btn btn-primary">Share</button>
+
+            <%= if (assigns[:current_user] != nil) do %>
+              <button id="add-like" class="btn btn-primary"
+                      data-user-id="<%= @current_user.id %>"
+                      data-message-id="<%= message.id %>">Like</button>
+              <button type="button" href="#" class="btn btn-primary">Share</button>
+            <% end %>
+
 
           <% end %>
           <small class="text-muted">Some time ago...</small>
