@@ -214,4 +214,13 @@ defmodule Microblog.Connections do
       true -> length res
     end
   end
+
+  def user_likes_post?(user_id, message_id) do
+    result = Repo.get_by(Like, from_user_id: user_id, to_message_id: message_id)
+    case result do
+      nil -> false
+      true -> true
+    end
+  end
+
 end
