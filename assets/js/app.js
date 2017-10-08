@@ -49,8 +49,12 @@ $(function() {
     // for this function, we want to receive a list of likes as the "data" variable, and
     // paste the length of the list into the template file...somehow...
     function got_likes(data) {
-      colsole.log(data);
-      let html = tmpl(data);
+      console.log("heres the data length:");
+      console.log(data["data"].length);
+      var context = {num_likes: data["data"].length};
+      let html = tmpl(context);
+      console.log("heres the html:");
+      console.log(html);
       dd.html(html);
     }
 
@@ -62,7 +66,6 @@ $(function() {
       method: "GET",
       success: got_likes,
     });
-
   }
 
   function add_like() {
@@ -76,10 +79,9 @@ $(function() {
       method: "POST",
       success: fetch_likes,
     });
-
-    likeButton.click(add_like);
-
-    fetch_likes();
   }
+
+  likeButton.click(add_like);
+  fetch_likes();
 });
 

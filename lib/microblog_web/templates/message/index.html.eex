@@ -39,8 +39,8 @@
 
       <%# this is the code that we want to execute to put the number of likes on the post %>
         <script id="render-number-likes-template" type="text/x-handlebars-template">
-          <div class="col-sm-1 left-pad-likes top-pad-likes">
-              <small class="text-muted">Likes: {{num_likes}}</small>
+          <div class="col-med-2 left-pad-likes top-pad-likes">
+              <small class="text-muted">{{num_likes}}</small>
           </div>
         </script>
 
