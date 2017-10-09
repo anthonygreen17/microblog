@@ -99,12 +99,12 @@ $(function() {
         console.log("user has not yet liked this message.");
         let html = like_button_template();
         likeButton.html(html);
-        likeButton.click(add_like);
+        unlikeButton.html("");
       } else {
         console.log("user has liked this message already!");
         let html = unlike_button_template();
+        likeButton.html("");
         unlikeButton.html(html);
-        unlikeButton.click(remove_like);
       }
     }
 
@@ -129,6 +129,7 @@ $(function() {
       var context = {num_likes: data["data"].length};
       let html = number_likes_template(context);
       number_likes_dest.html(html);
+      render_like_or_unlike_button();
     }
     console.log("about to fetch likes for message...");
 
@@ -144,8 +145,9 @@ $(function() {
 
   
 
+  unlikeButton.click(remove_like);
+  likeButton.click(add_like);
   // likeButton.click(add_like);
   fetch_likes_for_message();
-  render_like_or_unlike_button();
 });
 

@@ -51,7 +51,6 @@ defmodule MicroblogWeb.LikeController do
   end
 
   def delete(conn, %{"id" => id}) do
-    require IEx; IEx.pry();
     like = Connections.get_like!(id)
     with {:ok, %Like{}} <- Connections.delete_like(like) do
       send_resp(conn, :no_content, "")
@@ -59,7 +58,6 @@ defmodule MicroblogWeb.LikeController do
   end
 
   def delete(conn, %{"from_user_id" => from_user_id, "to_message_id" => to_message_id}) do
-    require IEx; IEx.pry();
     like = Connections.get_like_by_user_and_message_id(from_user_id, to_message_id)
     with {:ok, %Like{}} <- Connections.delete_like(like) do
       send_resp(conn, :no_content, "")
