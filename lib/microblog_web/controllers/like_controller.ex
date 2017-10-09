@@ -17,7 +17,6 @@ defmodule MicroblogWeb.LikeController do
   end
 
   def index(conn, %{"to_message_id" => to_message_id}) do
-    require IEx; IEx.pry();
     likes = Connections.get_list_of_likes(to_message_id)
     render(conn, "index.json", likes: likes)
   end
@@ -51,15 +50,17 @@ defmodule MicroblogWeb.LikeController do
     end
   end
 
-  def delete(conn, %{"from_user_id" => from_user_id, "to_message_id" => to_message_id}) do
-    like = Connections.get_user_like_on_post(from_user_id, to_message_id)
+  def delete(conn, %{"id" => id}) do
+    require IEx; IEx.pry();
+    like = Connections.get_like!(id)
     with {:ok, %Like{}} <- Connections.delete_like(like) do
       send_resp(conn, :no_content, "")
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    like = Connections.get_like!(id)
+  def delete(conn, %{"from_user_id" => from_user_id, "to_message_id" => to_message_id}) do
+    require IEx; IEx.pry();
+    like = Connections.get_like_by_user_and_message_id(from_user_id, to_message_id)
     with {:ok, %Like{}} <- Connections.delete_like(like) do
       send_resp(conn, :no_content, "")
     end

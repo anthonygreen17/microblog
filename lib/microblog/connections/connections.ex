@@ -229,6 +229,16 @@ defmodule Microblog.Connections do
     |> Repo.preload(:to_message)
   end
 
+  def get_like_by_user_and_message_id(user_id, message_id) do
+    Repo.get_by(Like, from_user_id: user_id, to_message_id: message_id) 
+  end
+
+  @doc """
+  Only call this if you're sure that the user has already liked the message
+
+  """
+  # def get_like_by_user_and_message_id!(user_id, message_id), do: Repo.get!(Like, id)
+
   def get_number_of_likes(message_id) do
     res = Repo.get_by(Like, to_message_id: message_id)
     case res do

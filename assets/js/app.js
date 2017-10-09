@@ -69,8 +69,10 @@ $(function() {
     });
   }
 
+  // in order to remove a like, first make a request to get the like by user_id and message_id. Then,
+  // use that response to get the proper like_id in order to delete
   function remove_like() {
-    let data = {like: {from_user_id: current_user_id, to_message_id: message_id}};
+    let data = {from_user_id: current_user_id, to_message_id: message_id};
 
     $.ajax({
       url: path,
