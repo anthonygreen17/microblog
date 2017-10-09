@@ -212,12 +212,11 @@ defmodule Microblog.Connections do
   return the empty list.
 
   """
+
   def get_list_of_likes(message_id) do
-    res = Repo.get_by(Like, to_message_id: message_id)
-    case res do
-      nil -> []
-      true -> res
-    end
+    Repo.all(from l in Like, where: l.to_message_id == ^message_id)
+    |> Repo.preload(:from_user)
+    |> Repo.preload(:to_message)
   end
 
   @doc """
@@ -225,7 +224,9 @@ defmodule Microblog.Connections do
 
   """
   def get_user_like_on_post(user_id, message_id) do
-    Repo.get_by(Like, from_user_id: user_id, to_message_id: message_id)
+    Repo.all(from l in Like, where: l.to_message_id == ^message_id and l.from_user_id == ^user_id)
+    |> Repo.preload(:from_user)
+    |> Repo.preload(:to_message)
   end
 
   def get_number_of_likes(message_id) do
