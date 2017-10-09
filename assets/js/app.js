@@ -33,6 +33,8 @@ $(function() {
   let number_likes_template = handlebars.compile(code);
 
   tt = $($("#render-like-button-template")[0]);
+  let current_user_id = tt.data('user-id');
+  let message_id = tt.data('message-id')
   code = tt.html();
   let like_button_template = handlebars.compile(code);
 
@@ -43,26 +45,26 @@ $(function() {
   let number_likes_dest = $($("#number-likes")[0]);
   let path = number_likes_dest.data('path');
 
-  let likeButton = $($("#add-like")[0]);
-  let current_user_id = likeButton.data('user-id');
-  let message_id = likeButton.data('message-id')
+  let likeButton = $($("#like-button")[0]);
+
+  console.log("current user id:");
+  console.log(current_user_id);
 
 
   // need to implement this here instead of in the .eex templates
   // that way, if a user likes a page, we can have the button click add
   // the like and then fetch likes afterwards, so that the number of likes can be updated
   // without re-rendering the entire page.
-  function fetch_likes() {
+  function fetch_likes_from_this_user() {
 
     // for this function, we want to receive a list of likes as the "data" variable, and
     // paste the length of the list into the template file...somehow...
     function got_likes(data) {
-      console.log("heres the data length:");
+      console.log("data lengthhhhhh:");
       console.log(data["data"].length);
+
       var context = {num_likes: data["data"].length};
       let html = number_likes_template(context);
-      console.log("heres the html:");
-      console.log(html);
       number_likes_dest.html(html);
     }
 
@@ -90,6 +92,6 @@ $(function() {
   }
 
   likeButton.click(add_like);
-  fetch_likes();
+  fetch_likes_from_this_use();
 });
 
