@@ -8,7 +8,9 @@
 
 <%= for message <- Enum.reverse(@messages) do %>
 
-<%= if ( (Microblog.Connections.user_is_following_user?(@current_user.id, message.user_id) != nil) or message.user_id == @current_user.id) do %>
+<%= if (assigns[:current_user] != nil) 
+    and ((Microblog.Connections.user_is_following_user?(@current_user.id, message.user_id) != nil) 
+    or (message.user_id == @current_user.id)) do %>
 
   <div class="card bottom-pad">
     <div class="card-body">
@@ -52,13 +54,28 @@
 
           <% else %>
 
+            <div id="like-button" data-path="<%= like_path(@conn, :index) %>">
+              &nbsp;
+            </div>
 
-            <%= if (assigns[:current_user] != nil) do %>
+            <div id="unlike-button" data-path="<%= like_path(@conn, :index) %>">
+              &nbsp;
+            </div>
+
+            <%# if this post is not the user's own post, allow them to like it. %>
+            <%# if the user has already liked the post, display a button to unlike it. %>
+            <script id="render-like-button-template" type="text/x-handlebars-template">
               <button id="add-like" class="btn btn-primary"
                       data-user-id="<%= @current_user.id %>"
                       data-message-id="<%= message.id %>">Like</button>
-              <button type="button" href="#" class="btn btn-primary">Share</button>
-            <% end %>
+            </script>
+
+            <script id="render-unlike-button-template" type="text/x-handlebars-template">
+              <button id="add-like" class="btn btn-danger"
+                      data-user-id="<%= @current_user.id %>"
+                      data-message-id="<%= message.id %>">Unlike</button>
+            </script>
+            <button type="button" href="#" class="btn btn-primary">Share</button>
 
 
           <% end %>

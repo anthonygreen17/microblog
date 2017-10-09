@@ -30,10 +30,18 @@ $(function() {
 
   let tt = $($("#render-number-likes-template")[0]);
   let code = tt.html();
-  let tmpl = handlebars.compile(code);
+  let number_likes_template = handlebars.compile(code);
 
-  let dd = $($("#number-likes")[0]);
-  let path = dd.data('path');
+  tt = $($("#render-like-button-template")[0]);
+  code = tt.html();
+  let like_button_template = handlebars.compile(code);
+
+  tt = $($("#render-unlike-button-template")[0]);
+  code = tt.html();
+  let unlike_button_template = handlebars.compile(code);
+
+  let number_likes_dest = $($("#number-likes")[0]);
+  let path = number_likes_dest.data('path');
 
   let likeButton = $($("#add-like")[0]);
   let current_user_id = likeButton.data('user-id');
@@ -52,10 +60,10 @@ $(function() {
       console.log("heres the data length:");
       console.log(data["data"].length);
       var context = {num_likes: data["data"].length};
-      let html = tmpl(context);
+      let html = number_likes_template(context);
       console.log("heres the html:");
       console.log(html);
-      dd.html(html);
+      number_likes_dest.html(html);
     }
 
     $.ajax({
