@@ -33,8 +33,6 @@ $(function() {
   let number_likes_template = handlebars.compile(code);
 
   tt = $($("#render-like-button-template")[0]);
-  let current_user_id = tt.data('user-id');
-  let message_id = tt.data('message-id')
   code = tt.html();
   let like_button_template = handlebars.compile(code);
 
@@ -46,26 +44,66 @@ $(function() {
   let path = number_likes_dest.data('path');
 
   let likeButton = $($("#like-button")[0]);
+  let current_user_id = likeButton.data('user_id');
+  let message_id = likeButton.data('message_id')
+
+  let unlikeButton = $($("#unlike-button")[0]);
 
   console.log("current user id:");
   console.log(current_user_id);
+  console.log("path");
+  console.log(path);
+
+
+  // attach this callback to the likeButton to enable a user to like a post
+  function add_like() {
+    let data = {like: {from_user_id: current_user_id, to_message_id: message_id}};
+
+    $.ajax({
+      url: path,
+      data: JSON.stringify(data),
+      contentType: "application/json",
+      dataType: "json",
+      method: "POST",
+      success: fetch_likes_for_message,
+    });
+  }
+
+  function remove_like() {
+    let data = {like: {from_user_id: current_user_id, to_message_id: message_id}};
+
+    $.ajax({
+      url: path,
+      data: JSON.stringify(data),
+      contentType: "application/json",
+      dataType: "json",
+      method: "DELETE",
+      success: fetch_likes_for_message,
+    });
+  }
 
 
   // need to implement this here instead of in the .eex templates
   // that way, if a user likes a page, we can have the button click add
   // the like and then fetch likes afterwards, so that the number of likes can be updated
   // without re-rendering the entire page.
-  function fetch_likes_from_this_user() {
+  function render_like_or_unlike_button() {
 
     // for this function, we want to receive a list of likes as the "data" variable, and
     // paste the length of the list into the template file...somehow...
     function got_likes(data) {
-      console.log("data lengthhhhhh:");
-      console.log(data["data"].length);
 
-      var context = {num_likes: data["data"].length};
-      let html = number_likes_template(context);
-      number_likes_dest.html(html);
+      if (data["data"].length == 0) {
+        console.log("user has not yet liked this message.");
+        let html = like_button_template();
+        likeButton.html(html);
+        likeButton.click(add_like);
+      } else {
+        console.log("user has liked this message already!");
+        let html = unlike_button_template();
+        unlikeButton.html(html);
+        unlikeButton.click(remove_like);
+      }
     }
 
     $.ajax({
@@ -78,20 +116,34 @@ $(function() {
     });
   }
 
-  function add_like() {
-    let data = {like: {from_user_id: current_user_id, to_message_id: message_id}};
+  function fetch_likes_for_message() {
+
+    // for this function, we want to receive a list of likes as the "data" variable, and
+    // paste the length of the list into the template file...somehow...
+    function got_likes(data) {
+      console.log("total likes for this message:");
+      console.log(data["data"].length);
+
+      var context = {num_likes: data["data"].length};
+      let html = number_likes_template(context);
+      number_likes_dest.html(html);
+    }
+    console.log("about to fetch likes for message...");
 
     $.ajax({
       url: path,
-      data: JSON.stringify(data),
+      data: {to_message_id: message_id},
       contentType: "application/json",
       dataType: "json",
-      method: "POST",
-      success: fetch_likes,
+      method: "GET",
+      success: got_likes,
     });
   }
 
-  likeButton.click(add_like);
-  fetch_likes_from_this_use();
+  
+
+  // likeButton.click(add_like);
+  fetch_likes_for_message();
+  render_like_or_unlike_button();
 });
 

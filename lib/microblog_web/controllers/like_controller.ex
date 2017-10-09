@@ -6,10 +6,23 @@ defmodule MicroblogWeb.LikeController do
 
   action_fallback MicroblogWeb.FallbackController
 
+  # This goes first.
+  def index(conn, %{"from_user_id" => from_user_id, "to_message_id" => to_message_id}) do
+    like = Connections.user_likes_post?(from_user_id, to_message_id)
+    render(conn, "index.json", likes: like)
+  end
+
+  def index(conn, %{"to_message_id" => to_message_id}) do
+    likes = Connections.get_number_of_likes(to_message_id)
+    render(conn, "index.json", likes: likes)
+  end
+
   def index(conn, _params) do
     likes = Connections.list_likes()
     render(conn, "index.json", likes: likes)
   end
+
+  
 
   def create(conn, %{"like" => like_params}) do
     with {:ok, %Like{} = like} <- Connections.create_like(like_params) do

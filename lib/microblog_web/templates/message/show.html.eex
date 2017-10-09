@@ -42,7 +42,9 @@
 
           <% else %>
 
-            <div id="like-button" data-path="<%= like_path(@conn, :index) %>">
+            <div id="like-button" data-path="<%= like_path(@conn, :index) %>"
+                 data-user_id="<%= @current_user.id %>"
+                 data-message_id="<%= @message.id %>">
               &nbsp;
             </div>
 

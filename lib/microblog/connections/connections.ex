@@ -219,7 +219,7 @@ defmodule Microblog.Connections do
     result = Repo.get_by(Like, from_user_id: user_id, to_message_id: message_id)
     case result do
       nil -> false
-      true -> true
+      true -> result
     end
   end
 
