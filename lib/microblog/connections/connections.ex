@@ -207,6 +207,27 @@ defmodule Microblog.Connections do
     Like.changeset(like, %{})
   end
 
+  @doc """
+  Return a list of all of the likes associated with this message. If there are none,
+  return the empty list.
+
+  """
+  def get_list_of_likes(message_id) do
+    res = Repo.get_by(Like, to_message_id: message_id)
+    case res do
+      nil -> []
+      true -> res
+    end
+  end
+
+  @doc """
+  If the user likes the post with the given id, return that like. Otherwise, return nil.
+
+  """
+  def get_user_like_on_post(user_id, message_id) do
+    Repo.get_by(Like, from_user_id: user_id, to_message_id: message_id)
+  end
+
   def get_number_of_likes(message_id) do
     res = Repo.get_by(Like, to_message_id: message_id)
     case res do

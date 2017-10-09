@@ -8,12 +8,15 @@ defmodule MicroblogWeb.LikeController do
 
   # This goes first.
   def index(conn, %{"from_user_id" => from_user_id, "to_message_id" => to_message_id}) do
-    like = Connections.user_likes_post?(from_user_id, to_message_id)
-    render(conn, "index.json", likes: like)
+    like = Connections.get_user_like_on_post(from_user_id, to_message_id)
+    case like do
+      nil  -> render(conn, "index.json", likes: [])
+      true -> render(conn, "index.json", likes: like)
+    end
   end
 
   def index(conn, %{"to_message_id" => to_message_id}) do
-    likes = Connections.get_number_of_likes(to_message_id)
+    likes = Connections.get_list_of_likes(to_message_id)
     render(conn, "index.json", likes: likes)
   end
 
