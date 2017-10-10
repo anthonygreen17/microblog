@@ -30,7 +30,6 @@
         <p class="card-text"><%= @message.body %><br>...</p>
 
       </div>
-
     </div>
 
 
