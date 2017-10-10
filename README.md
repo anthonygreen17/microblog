@@ -18,11 +18,11 @@ My git repo is located at
 https://github.com/anthonygreen17/microblog
 ~~~
 
-**HW2**
+### HW2 ###
 
 I deployed a distillery release, but I did follow the "compromise" method outlined in the homework - I installed the neccesary tools (elixir, erlang, phoenix) on my VPS so that I was able to create the prod database via `MIX_ENV=prod mix ecto.create`. After that, I was able to get my application up and running smoothly with `MIX_ENV=prod PORT=8000 ./bin/microblog start`.
 
-**HW3**
+### HW3 ###
 
 I "borrowed" the entire session controller from the man himself, Professor Nat Tuck.
 
@@ -46,18 +46,26 @@ Things that aren't so good:
 - after creating a new user, that user should be logged in as the current user
 
 
-** HW5**
+### HW5 ###
 
-Likes/Unlikes:
+**Post timestamps**:
+
+Although this wasn't a requirement for this homework assignment, I decided to add post timestamps cause it looks a whole lot nicer that way. Timestamps are showed in post show and index pages, as well as on the feed at the bottom of the user's own page.
+
+**Likes/Unlikes**:
 
 In this homework I added the functionality to like and unlike posts. I chose to handle all of this entirely in the message "show" page. I thought it looked a little messy to display options for the user's own posts as ell as for others' posts on the index page. This is because the user should have the option to delete their own post, but not anyone else's posts. This variance in displayed posts made the index look a little messy. Instead, I gave every post a "View Post" button to take a user to the show page for that post. At that point, any message can be likes/unliked, and the user is able to delete their own posts from here. A "like" adds "1" to the like counter (displayed below user's photo), and an "unlike" removes a like from that counter. The like/unlike buttons are dynamically rendered in Javascript depending on whether or not the user has already likes the given post. Like Instagram/Facebook, I chose to also allow the user to like their own posts.
 
 
-Deploy Script:
+**Deploy Script**:
 
-My `deploy.bash` script is an adaptation of NTuck's `deploy.sh` script for the `nu_mart` site.
+My `deploy.bash` script is an adaptation of NTuck's `deploy.sh` script for the `nu_mart` site. It is designed to be run from the server itseld and can be used as follows:
 
+~~~
+./deploy.bash $TARGET_DIR
+~~~
 
+where `$TARGET_DIR` is the directory to deploy to. The script will prompt you to create the directory if it doesn't exist, to guard against potential accidents due to typos.
 
 
 ## Other pre-generated stuff, left here for reference ##
