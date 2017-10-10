@@ -8,7 +8,9 @@
 
 <%= for message <- Enum.reverse(@messages) do %>
 
-<%= if ( (Microblog.Connections.user_is_following_user?(@current_user.id, message.user_id) != nil) or message.user_id == @current_user.id) do %>
+<%= if (assigns[:current_user] != nil) 
+    and ((Microblog.Connections.user_is_following_user?(@current_user.id, message.user_id) != nil) 
+    or (message.user_id == @current_user.id)) do %>
 
   <div class="card bottom-pad">
     <div class="card-body">
@@ -26,20 +28,13 @@
           </h4>
           <p class="card-text"><%= message.body %><br>...</p>
 
-          <%= if (@current_user.id == message.user_id) do %>
-
-            <%= link "Delete Post", to: message_path(@conn, :delete, message.id), method: :delete, data: [confirm: "Delete this post?"], class: "btn btn-danger btn-xs" %>
-
-          <% else %>
-
-            <button type="button" href="#" class="btn btn-danger">Like</button>
-            <button type="button" href="#" class="btn btn-primary">Share</button>
-
-          <% end %>
+          <%= link "View Post", to: message_path(@conn, :show, message.id), class: "btn btn-primary btn-xs"%>
           <small class="text-muted">Some time ago...</small>
+
         </div>
 
-      </div>
+      </div> <!-- row -->
+
     </div>
   </div>
 

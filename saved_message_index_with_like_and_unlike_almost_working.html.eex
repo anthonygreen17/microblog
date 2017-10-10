@@ -1,0 +1,98 @@
+<div class="container">
+
+  <div class="row bottom-pad top-pad">
+    <div class="col">
+      <h2>Feed</h2>
+    </div>
+  </div>
+
+<%= for message <- Enum.reverse(@messages) do %>
+
+<%= if (assigns[:current_user] != nil) 
+    and ((Microblog.Connections.user_is_following_user?(@current_user.id, message.user_id) != nil) 
+    or (message.user_id == @current_user.id)) do %>
+
+  <div class="card bottom-pad">
+    <div class="card-body">
+
+      <div class="row">
+        <div class="post-thumbnail-pic">
+          <small>User Photo Here</small>
+        </div>
+
+        <div class="col-md-auto justify-content-left">
+          <h4 class="card-title">
+            <small class="text-muted">
+              @<%= link Microblog.Accounts.get_user_by_id!(message.user_id).username, to: user_path(@conn, :show, Microblog.Accounts.get_user_by_id!(message.user_id)), class: "text-muted" %>
+            </small>  
+          </h4>
+          <p class="card-text"><%= message.body %><br>...</p>
+
+        </div>
+
+      </div> <!-- row -->
+
+      <div class="row">
+
+
+        <div id="number-likes" data-path="<%= like_path(@conn, :index) %>">
+          &nbsp;
+        </div>
+
+      <%# this is the code that we want to execute to put the number of likes on the post %>
+        <script id="render-number-likes-template" type="text/x-handlebars-template">
+          <div class="col-med-2 left-pad-likes top-pad-likes">
+              <small class="text-muted">{{num_likes}}</small>
+          </div>
+        </script>
+
+        <div class="col-md-auto justify-content-left">
+
+          <%= if (@current_user.id == message.user_id) do %>
+
+            <%= link "Delete Post", to: message_path(@conn, :delete, message.id), method: :delete, data: [confirm: "Delete this post?"], class: "btn btn-danger btn-xs" %>
+
+          <% else %>
+
+            <div id="like-button" data-path="<%= like_path(@conn, :index) %>">
+              &nbsp;
+            </div>
+
+            <div id="unlike-button" data-path="<%= like_path(@conn, :index) %>">
+              &nbsp;
+            </div>
+
+            <%# if this post is not the user's own post, allow them to like it. %>
+            <%# if the user has already liked the post, display a button to unlike it. %>
+            <script id="render-like-button-template" type="text/x-handlebars-template">
+              <button id="add-like" class="btn btn-primary"
+                      data-user-id="<%= @current_user.id %>"
+                      data-message-id="<%= message.id %>">Like</button>
+            </script>
+
+            <script id="render-unlike-button-template" type="text/x-handlebars-template">
+              <button id="add-like" class="btn btn-danger"
+                      data-user-id="<%= @current_user.id %>"
+                      data-message-id="<%= message.id %>">Unlike</button>
+            </script>
+            <button type="button" href="#" class="btn btn-primary">Share</button>
+
+
+          <% end %>
+            <%= link "View Post", to: message_path(@conn, :show, message.id), class: "btn btn-primary btn-xs"%>
+          <small class="text-muted">Some time ago...</small>
+
+        </div>
+        
+      </div>
+
+    </div>
+  </div>
+
+<% end %> <!-- if statement -->
+
+<% end %> <!-- message loop -->
+</div>  <!-- container -->
+
+<span><%= link "New Message", to: message_path(@conn, :new) %></span>
+

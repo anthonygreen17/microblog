@@ -46,6 +46,17 @@ Things that aren't so good:
 - after creating a new user, that user should be logged in as the current user
 
 
+** HW5**
+
+Likes/Unlikes:
+
+In this homework I added the functionality to like and unlike posts. I chose to handle all of this entirely in the message "show" page. I thought it looked a little messy to display options for the user's own posts as ell as for others' posts on the index page. This is because the user should have the option to delete their own post, but not anyone else's posts. This variance in displayed posts made the index look a little messy. Instead, I gave every post a "View Post" button to take a user to the show page for that post. At that point, any message can be likes/unliked, and the user is able to delete their own posts from here. A "like" adds "1" to the like counter (displayed below user's photo), and an "unlike" removes a like from that counter. The like/unlike buttons are dynamically rendered in Javascript depending on whether or not the user has already likes the given post. Like Instagram/Facebook, I chose to also allow the user to like their own posts.
+
+
+Deploy Script:
+
+
+
 
 ## Other pre-generated stuff, left here for reference ##
 To start your Phoenix server:

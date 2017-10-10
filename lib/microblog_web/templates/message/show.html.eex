@@ -1,3 +1,18 @@
+<%# if this post is not the user's own post, allow them to like it. %>
+            <%# if the user has already liked the post, display a button to unlike it. %>
+<script id="render-like-button-template" type="text/x-handlebars-template">
+  <button id="add-like" class="btn btn-primary"
+          data-user-id="<%= @current_user.id %>"
+          data-message-id="<%= @message.id %>">Like</button>
+</script>
+
+<script id="render-unlike-button-template" type="text/x-handlebars-template">
+  <button id="add-like" class="btn btn-danger"
+          data-user-id="<%= @current_user.id %>"
+          data-message-id="<%= @message.id %>">Unlike</button>
+</script>
+
+
 <div class="card bottom-pad">
   <div class="card-body">
 
@@ -13,9 +28,46 @@
           </small>  
         </h4>
         <p class="card-text"><%= @message.body %><br>...</p>
-        <button type="button" href="#" class="btn btn-danger">Like</button>
-        <button type="button" href="#" class="btn btn-primary">Share</button>
-        <small class="text-muted">Some time ago...</small>
+
+      </div>
+    </div>
+
+
+    <%# here, we're gonna deal with all the logic related to liking/unliking a post %>
+    <div class="row no-gutters">
+
+
+        <div id="number-likes" data-path="<%= like_path(@conn, :index) %>"
+             class="top-pad-likes justify-content-center">
+        </div>
+
+      <%# this is the code that we want to execute to put the number of likes on the post %>
+        <script id="render-number-likes-template" type="text/x-handlebars-template">
+          <div class="col-md-auto left-pad-likes top-pad-likes">
+              <small class="text-muted">Likes: {{num_likes}}</small>
+          </div>
+        </script>
+
+        <%# allow the user to delete their own messages %>
+        <%= if @current_user.id == @message.user_id do %>
+
+          <div class="col-md-auto justify-content-left">
+
+              <%= link "Delete Post", to: message_path(@conn, :delete, @message.id), method: :delete, data: [confirm: "Delete this post?"], class: "btn btn-danger btn-xs" %>
+          </div>
+        <% end %>
+
+          <div class="col-md-auto justify-content-left">
+            <div id="like-button" data-path="<%= like_path(@conn, :index) %>"
+                 data-user_id="<%= @current_user.id %>"
+                 data-message_id="<%= @message.id %>">
+            </div>
+
+            <div id="unlike-button" data-path="<%= like_path(@conn, :index) %>"></div>
+
+          </div>
+          <small class="text-muted top-pad-likes left-pad-likes">Some time ago...</small>
+
       </div>
 
     </div>
