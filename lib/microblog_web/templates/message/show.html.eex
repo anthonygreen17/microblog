@@ -66,7 +66,9 @@
             <div id="unlike-button" data-path="<%= like_path(@conn, :index) %>"></div>
 
           </div>
-          <small class="text-muted top-pad-likes left-pad-likes">Some time ago...</small>
+          <small class="text-muted top-pad-likes left-pad-likes">
+            <%= Microblog.Posts.get_message_timestamp(@message) %>
+          </small>
 
       </div>
 

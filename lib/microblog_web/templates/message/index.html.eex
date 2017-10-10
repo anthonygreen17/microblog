@@ -29,7 +29,9 @@
           <p class="card-text"><%= message.body %><br>...</p>
 
           <%= link "View Post", to: message_path(@conn, :show, message.id), class: "btn btn-primary btn-xs"%>
-          <small class="text-muted">Some time ago...</small>
+          <small class="text-muted top-pad-likes left-pad-likes">
+            <%= Microblog.Posts.get_message_timestamp(message) %>
+          </small>
 
         </div>
 
