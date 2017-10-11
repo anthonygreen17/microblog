@@ -55,6 +55,8 @@ In this homework I added the functionality to like and unlike posts. I chose to 
 
 Deploy Script:
 
+My `deploy.bash` script is an adaptation of NTuck's `deploy.sh` script for the `nu_mart` site.
+
 
 
 

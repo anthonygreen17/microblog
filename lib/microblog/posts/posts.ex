@@ -101,4 +101,29 @@ defmodule Microblog.Posts do
   def change_message(%Message{} = message) do
     Message.changeset(message, %{})
   end
+
+  @doc """
+  Get a timestamp for the message that looks something like:
+
+                10/3/2017, 12:58:57 A.M.
+
+  """
+  def get_message_timestamp(%Message{} = message) do
+    ua = message.updated_at
+
+    am_or_pm = if (ua.hour >= 12) do "P.M." else "A.M." end
+    hour = cond do
+      ua.hour == 0
+        -> "12"
+      ua.hour <= 12
+        -> (["0", to_string(ua.hour)]) |> Enum.join("")
+      true
+        -> (["0", to_string(ua.hour - 12)]) |> Enum.join("")
+    end
+
+    [to_string(ua.month), "/", to_string(ua.day), "/", to_string(ua.year),
+     ", ", hour, ":", to_string(ua.minute), ":", to_string(ua.second), " ",
+    am_or_pm]
+    |> Enum.join("")
+  end
 end
