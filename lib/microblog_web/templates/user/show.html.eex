@@ -66,36 +66,41 @@
 
       <%= for message <- Enum.reverse(@user.messages) do %>
 
-        <div class="card bottom-pad">
-          <div class="card-body">
+<%= if (assigns[:current_user] != nil) 
+    and ((Microblog.Connections.user_is_following_user?(@current_user.id, message.user_id) != nil) 
+    or (message.user_id == @current_user.id)) do %>
 
-            <div class="row">
-              <div class="post-thumbnail-pic">
-                <small>User Photo Here</small>
-              </div>
+  <div class="card bottom-pad">
+    <div class="card-body">
 
-              <div class="col-md-auto justify-content-left">
-                <h4 class="card-title">
-                  <small class="text-muted">
-                    @<%= link Microblog.Accounts.get_user_by_id!(message.user_id).username, to: user_path(@conn, :show, Microblog.Accounts.get_user_by_id!(message.user_id)), class: "text-muted" %>
-                  </small>  
-                </h4>
-                <p class="card-text"><%= message.body %><br>...</p>
-
-                <%= if (assigns[:current_user] != nil) and (@current_user.id == @user.id) do %>
-
-                  <%= link "Delete Post", to: message_path(@conn, :delete, message.id), method: :delete, data: [confirm: "Delete this post?"], class: "btn btn-danger btn-xs" %>
-
-                <% end %>
-
-                <small class="text-muted">Some time ago...</small>
-              </div>
-
-            </div>
-          </div>
+      <div class="row">
+        <div class="post-thumbnail-pic">
+          <small>User Photo Here</small>
         </div>
 
-<% end %>
+        <div class="col-md-auto justify-content-left">
+          <h4 class="card-title">
+            <small class="text-muted">
+              @<%= link Microblog.Accounts.get_user_by_id!(message.user_id).username, to: user_path(@conn, :show, Microblog.Accounts.get_user_by_id!(message.user_id)), class: "text-muted" %>
+            </small>  
+          </h4>
+          <p class="card-text"><%= message.body %><br>...</p>
+
+          <%= link "View Post", to: message_path(@conn, :show, message.id), class: "btn btn-primary btn-xs"%>
+          <small class="text-muted top-pad-likes left-pad-likes">
+            <%= Microblog.Posts.get_message_timestamp(message) %>
+          </small>
+
+        </div>
+
+      </div> <!-- row -->
+
+    </div>
+  </div>
+
+<% end %> <!-- if statement -->
+
+<% end %> <!-- message loop -->
 
 
     </div>

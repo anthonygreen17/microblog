@@ -19,6 +19,7 @@
 
   <body>
 
+
     <nav class="navbar navbar-dark bg-secondary navbar-expand-md">
       <%= link("Home", to: page_path(@conn, :index)) %>
 

@@ -10,6 +10,8 @@ defmodule Microblog.Accounts.User do
     has_many :messages, Microblog.Posts.Message
     has_many :followed_users, Microblog.Connections.Follow, foreign_key: :from_user_id
 
+    has_many :likes, Microblog.Connections.Like, foreign_key: :from_user_id
+
     timestamps()
   end
 
