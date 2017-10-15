@@ -56,14 +56,25 @@ socket.connect()
 
 
 
+// function for handling when we are on the message show page
 $(function() {
 
-   	// Now that you are connected, you can join channels with a topic:
-	let channel = socket.channel("live_feed:update", {})
+	if (!$("#submit-post-button").length > 0) {
+		return;
+	}
 
-	// put the desired response to a user receiving a "new_post" event - 
-	// check if the user is following the user who generated the event,
-	// and render a new message if they are.
+	let submitPostButton = $($("#submit-post-button")[0]);
+	console.log("setting up the post submit button");
+	let user_id = submitPostButton.data("user-id");
+
+	function send_new_post_update() {
+		console.log("sending pushed button data");
+		channel.push("new_post", {user_id: submitPostButton.data("user-id")});
+	}
+
+	submitPostButton.click(send_new_post_update);
+
+	let channel = socket.channel("live_feed:update", {"user_id": user_id});
 	channel.on("new_post", new_msg => {
 		console.log("new message from user with id");
 		console.log(new_msg);
@@ -72,29 +83,28 @@ $(function() {
 	channel.join()
 	  .receive("ok", resp => { console.log("Joined live feed updates", resp) })
 	  .receive("error", resp => { console.log("Unable to join", resp) })
+});
 
-	function setup_submit_button() {
-		let submitPostButton = $($("#submit-post-button")[0]);
-		console.log("setting up the post submit button");
+$(function() {
 
-		function send_new_post_update() {
-			console.log("sending pushed button data");
-			channel.push("new_post", {user_id: submitPostButton.data("user-id")});
-			// channel.push("new_post", "hello");
-		}
-		submitPostButton.click(send_new_post_update);
+	if ( !$("#render-live-feed-updates-template").length > 0) {
+		return;
 	}
 
-	if (!$("#render-live-feed-updates-template").length > 0) {
-    	// This page shouldnt display any likes.
-    	if (!$("#submit-post-button").length > 0) {
-	    	console.log("This page shouldnt care about live feed updates.");
-    		return;
-    	} else {
-    		setup_submit_button();
-    	}
-	}
+	let renderLiveUpdate = $($("#render-live-feed-updates-template")[0]);
+	let user_id = renderLiveUpdate.data("user-id");
 
+   	// Now that you are connected, you can join channels with a topic:
+	let channel = socket.channel("live_feed:update", {"user_id": user_id});
+
+	channel.on("new_post", new_msg => {
+		console.log("new message from user with id");
+		console.log(new_msg);
+	})
+
+	channel.join()
+	  .receive("ok", resp => { console.log("Joined live feed updates", resp) })
+	  .receive("error", resp => { console.log("Unable to join", resp) })
 });
 
 export default socket

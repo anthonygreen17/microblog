@@ -6,7 +6,8 @@
     </div>
   </div>
 
-  <script id="render-live-feed-updates-template" type="text/x-handlebars-template">
+  <script id="render-live-feed-updates-template" type="text/x-handlebars-template"
+          data-user-id="<%= @current_user.id %>">
   </script>
 
 <%= for message <- Enum.reverse(@messages) do %>

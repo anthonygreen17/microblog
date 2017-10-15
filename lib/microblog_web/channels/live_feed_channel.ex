@@ -5,7 +5,9 @@ defmodule MicroblogWeb.LiveFeedChannel do
   alias Microblog.Repo
 
   def join("live_feed:update", payload, socket) do
+
     if authorized?(payload) do
+      socket = assign(socket, :user_id, Map.get(payload, "user_id"))
       {:ok, socket}
     else
       {:error, %{reason: "unauthorized"}}
@@ -22,7 +24,7 @@ defmodule MicroblogWeb.LiveFeedChannel do
   # so clients can decide whether or not to render the message
   def handle_in("new_post", %{"user_id" => user_id}, socket) do
 
-    require IEx; IEx.pry
+    # require IEx; IEx.pry
     # notify each joined client on this socket's topic and invoke their
     # handle_out() callbacks. By default, this callback passes the broadcast on
     # t the client. but we can modify it for message filtering
@@ -60,7 +62,7 @@ defmodule MicroblogWeb.LiveFeedChannel do
   # end
 
   # Add authorization logic here as required.
-  defp authorized?(_payload) do
-    true
+  defp authorized?(payload) do
+    Map.has_key?(payload, "user_id")
   end
 end
