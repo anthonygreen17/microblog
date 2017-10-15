@@ -59,8 +59,10 @@ socket.connect()
 $(function() {
 	if (!$("#render-live-feed-updates-template").length > 0) {
     	// This page shouldnt display any likes.
-    	console.log("This page shouldnt care about live feed updates.");
-    	return;
+    	if (!$("#submit-post").length > 0) {
+	    	console.log("This page shouldnt care about live feed updates.");
+    		return;
+    	}
 	}
 
    	// Now that you are connected, you can join channels with a topic:
