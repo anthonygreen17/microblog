@@ -54,19 +54,30 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 
 socket.connect()
 
-// Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("live_feed:lobby", {})
 
-// put the desired response to a user receiving a "new_post" event - 
-// check if the user is following the user who generated the event,
-// and render a new message if they are.
-channel.on("new_post", new_msg => {
-	console.log("new message from user with id");
-	console.log(new_msg);
-})
 
-channel.join()
-  .receive("ok", resp => { console.log("Joined live feed updates", resp) })
-  .receive("error", resp => { console.log("Unable to join", resp) })
+$(function() {
+	if (!$("#render-live-feed-updates-template").length > 0) {
+    	// This page shouldnt display any likes.
+    	console.log("This page shouldnt care about live feed updates.");
+    	return;
+	}
+
+   	// Now that you are connected, you can join channels with a topic:
+	let channel = socket.channel("live_feed:lobby", {})
+
+	// put the desired response to a user receiving a "new_post" event - 
+	// check if the user is following the user who generated the event,
+	// and render a new message if they are.
+	channel.on("new_post", new_msg => {
+		console.log("new message from user with id");
+		console.log(new_msg);
+	})
+
+	channel.join()
+	  .receive("ok", resp => { console.log("Joined live feed updates", resp) })
+	  .receive("error", resp => { console.log("Unable to join", resp) })
+
+});
 
 export default socket

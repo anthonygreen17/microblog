@@ -6,6 +6,9 @@
     </div>
   </div>
 
+  <script id="render-live-feed-updates-template" type="text/x-handlebars-template">
+  </script>
+
 <%= for message <- Enum.reverse(@messages) do %>
 
 <%= if (assigns[:current_user] != nil) 
