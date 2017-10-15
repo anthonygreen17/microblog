@@ -22,37 +22,37 @@ import socket from "./socket"
 
 let handlebars = require("handlebars");
 
-$(function() {
-  if (!$("#submit-post-button").length > 0) {
-    return;
-  }
-  console.log("this is the message post page");
+// $(function() {
+//   if (!$("#submit-post-button").length > 0) {
+//     return;
+//   }
+//   console.log("this is the message post page");
 
-  let submitPostButton = $($("#submit-post-button")[0]);
-  let current_user_id = submitPostButton.data("user-id");
-  let path = submitPostButton.data('path');
+//   let submitPostButton = $($("#submit-post-button")[0]);
+//   let current_user_id = submitPostButton.data("user-id");
+//   let path = submitPostButton.data('path');
 
-  let postContent = $($("#submit-post-content")[0]);
-
-
-  function post_message() {
-    let data = {message: {user_id: current_user_id, body: postContent}};
-    console.log("posting message with content:");
-    console.log(postContent.value);
-
-    $.ajax({
-      url: path,
-      data: JSON.stringify(data),
-      contentType: "application/json",
-      dataType: "json",
-      method: "POST",
-      // success: fetch_likes_for_message,
-    });
-  }
+//   let postContent = $($("#submit-post-content")[0]);
 
 
-  // submitPostButton.click(post_message);
-})
+//   function post_message() {
+//     let data = {message: {user_id: current_user_id, body: postContent}};
+//     console.log("posting message with content:");
+//     console.log(postContent.value);
+
+//     $.ajax({
+//       url: path,
+//       data: JSON.stringify(data),
+//       contentType: "application/json",
+//       dataType: "json",
+//       method: "POST",
+//       // success: fetch_likes_for_message,
+//     });
+//   }
+
+
+//   // submitPostButton.click(post_message);
+// })
 
 $(function() {
   if (!$("#render-number-likes-template").length > 0) {

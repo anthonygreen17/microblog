@@ -57,16 +57,9 @@ socket.connect()
 
 
 $(function() {
-	if (!$("#render-live-feed-updates-template").length > 0) {
-    	// This page shouldnt display any likes.
-    	if (!$("#submit-post").length > 0) {
-	    	console.log("This page shouldnt care about live feed updates.");
-    		return;
-    	}
-	}
 
    	// Now that you are connected, you can join channels with a topic:
-	let channel = socket.channel("live_feed:lobby", {})
+	let channel = socket.channel("live_feed:update", {})
 
 	// put the desired response to a user receiving a "new_post" event - 
 	// check if the user is following the user who generated the event,
@@ -79,6 +72,28 @@ $(function() {
 	channel.join()
 	  .receive("ok", resp => { console.log("Joined live feed updates", resp) })
 	  .receive("error", resp => { console.log("Unable to join", resp) })
+
+	function setup_submit_button() {
+		let submitPostButton = $($("#submit-post-button")[0]);
+		console.log("setting up the post submit button");
+
+		function send_new_post_update() {
+			console.log("sending pushed button data");
+			channel.push("new_post", {user_id: submitPostButton.data("user-id")});
+			// channel.push("new_post", "hello");
+		}
+		submitPostButton.click(send_new_post_update);
+	}
+
+	if (!$("#render-live-feed-updates-template").length > 0) {
+    	// This page shouldnt display any likes.
+    	if (!$("#submit-post-button").length > 0) {
+	    	console.log("This page shouldnt care about live feed updates.");
+    		return;
+    	} else {
+    		setup_submit_button();
+    	}
+	}
 
 });
 
