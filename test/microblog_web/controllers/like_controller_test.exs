@@ -4,9 +4,9 @@ defmodule MicroblogWeb.LikeControllerTest do
   alias Microblog.Connections
   alias Microblog.Connections.Like
 
-  @create_attrs %{}
-  @update_attrs %{}
-  @invalid_attrs %{}
+  @create_attrs %{from_user_id: 37, to_message_id: 70}
+  @update_attrs %{from_user_id: 38, to_message_id: 71}
+  @invalid_attrs %{from_user_id: nil, to_user_id: nil}
 
   def fixture(:like) do
     {:ok, like} = Connections.create_like(@create_attrs)
@@ -27,7 +27,7 @@ defmodule MicroblogWeb.LikeControllerTest do
   describe "create like" do
     test "renders like when data is valid", %{conn: conn} do
       conn = post conn, like_path(conn, :create), like: @create_attrs
-      assert %{"id" => id} = json_response(conn, 201)["data"]
+      assert %{"message_id" => message_id, "user_id" => id} = json_response(conn, 201)["data"]
 
       conn = get conn, like_path(conn, :show, id)
       assert json_response(conn, 200)["data"] == %{
@@ -36,24 +36,6 @@ defmodule MicroblogWeb.LikeControllerTest do
 
     test "renders errors when data is invalid", %{conn: conn} do
       conn = post conn, like_path(conn, :create), like: @invalid_attrs
-      assert json_response(conn, 422)["errors"] != %{}
-    end
-  end
-
-  describe "update like" do
-    setup [:create_like]
-
-    test "renders like when data is valid", %{conn: conn, like: %Like{id: id} = like} do
-      conn = put conn, like_path(conn, :update, like), like: @update_attrs
-      assert %{"id" => ^id} = json_response(conn, 200)["data"]
-
-      conn = get conn, like_path(conn, :show, id)
-      assert json_response(conn, 200)["data"] == %{
-        "id" => id}
-    end
-
-    test "renders errors when data is invalid", %{conn: conn, like: like} do
-      conn = put conn, like_path(conn, :update, like), like: @invalid_attrs
       assert json_response(conn, 422)["errors"] != %{}
     end
   end

@@ -21,9 +21,9 @@ defmodule MicroblogWeb.LiveFeedChannel do
 
   # Channels can be used in a request/response fashion
   # by sending replies to requests from the client
-  # def handle_in("ping", payload, socket) do
-  #   {:reply, {:ok, payload}, socket}
-  # end
+  def handle_in("ping", payload, socket) do
+    {:reply, {:ok, payload}, socket}
+  end
 
   # When a new message is posted, broadcast the message.id and message.user_id
   # so clients can decide whether or not to render the message

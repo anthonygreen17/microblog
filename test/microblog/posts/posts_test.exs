@@ -21,7 +21,7 @@ defmodule Microblog.PostsTest do
 
     test "list_messages/0 returns all messages" do
       message = message_fixture()
-      assert Posts.list_messages() == [message]
+      assert Enum.member?(Posts.list_messages(), message)
     end
 
     test "get_message!/1 returns the message with given id" do

@@ -15,14 +15,14 @@ defmodule MicroblogWeb.UserControllerTest do
   describe "index" do
     test "lists all users", %{conn: conn} do
       conn = get conn, user_path(conn, :index)
-      assert html_response(conn, 200) =~ "Listing Users"
+      assert html_response(conn, 200) =~ "Search for users..."
     end
   end
 
   describe "new user" do
     test "renders form", %{conn: conn} do
       conn = get conn, user_path(conn, :new)
-      assert html_response(conn, 200) =~ "New User"
+      assert html_response(conn, 200) =~ "Sign Up"
     end
   end
 
@@ -34,12 +34,12 @@ defmodule MicroblogWeb.UserControllerTest do
       assert redirected_to(conn) == user_path(conn, :show, id)
 
       conn = get conn, user_path(conn, :show, id)
-      assert html_response(conn, 200) =~ "Show User"
+      assert html_response(conn, 200) =~ "Following:"
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
       conn = post conn, user_path(conn, :create), user: @invalid_attrs
-      assert html_response(conn, 200) =~ "New User"
+      assert html_response(conn, 200) =~ "Sign Up"
     end
   end
 
@@ -60,7 +60,7 @@ defmodule MicroblogWeb.UserControllerTest do
       assert redirected_to(conn) == user_path(conn, :show, user)
 
       conn = get conn, user_path(conn, :show, user)
-      assert html_response(conn, 200) =~ "some updated email"
+      assert html_response(conn, 200) =~ "Following:"
     end
 
     test "renders errors when data is invalid", %{conn: conn, user: user} do

@@ -6,7 +6,7 @@ defmodule MicroblogWeb.LiveFeedChannelTest do
   setup do
     {:ok, _, socket} =
       socket("user_id", %{some: :assign})
-      |> subscribe_and_join(LiveFeedChannel, "live_feed:lobby")
+      |> subscribe_and_join(LiveFeedChannel, "live_feed:lobby", %{"user_id" => 14})
 
     {:ok, socket: socket}
   end
