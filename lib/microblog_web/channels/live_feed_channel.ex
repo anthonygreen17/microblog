@@ -4,10 +4,14 @@ defmodule MicroblogWeb.LiveFeedChannel do
   # import Microblog.Repo
   alias Microblog.Repo
 
+  def broadcast_new_post(msg_id) do
+    MicroblogWeb.Endpoint.broadcast("live_feed:update", "new_post", %{"id" => msg_id})
+  end
+
   def join("live_feed:update", payload, socket) do
 
     if authorized?(payload) do
-      socket = assign(socket, :user_id, Map.get(payload, "user_id"))
+      # socket = assign(socket, :user_id, Map.get(payload, "user_id"))
       {:ok, socket}
     else
       {:error, %{reason: "unauthorized"}}

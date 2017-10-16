@@ -57,33 +57,33 @@ socket.connect()
 
 
 // function for handling when we are on the message show page
-$(function() {
+// $(function() {
 
-	if (!$("#submit-post-button").length > 0) {
-		return;
-	}
+// 	if (!$("#submit-post-button").length > 0) {
+// 		return;
+// 	}
 
-	let submitPostButton = $($("#submit-post-button")[0]);
-	console.log("setting up the post submit button");
-	let user_id = submitPostButton.data("user-id");
+// 	let submitPostButton = $($("#submit-post-button")[0]);
+// 	console.log("setting up the post submit button");
+// 	// let user_id = submitPostButton.data("user-id");
 
-	function send_new_post_update() {
-		console.log("sending pushed button data");
-		channel.push("new_post", {user_id: submitPostButton.data("user-id")});
-	}
+// 	// function send_new_post_update() {
+// 	// 	console.log("sending pushed button data");
+// 	// 	channel.push("new_post", {user_id: submitPostButton.data("user-id")});
+// 	// 
 
-	submitPostButton.click(send_new_post_update);
+// 	// submitPostButton.click(send_new_post_update);
 
-	let channel = socket.channel("live_feed:update", {"user_id": user_id});
-	channel.on("new_post", new_msg => {
-		console.log("new message from user with id");
-		console.log(new_msg);
-	})
+// 	let channel = socket.channel("live_feed:update", {"user_id": user_id});
+// 	channel.on("new_post", new_msg => {
+// 		console.log("new message from user with id");
+// 		console.log(new_msg);
+// 	})
 
-	channel.join()
-	  .receive("ok", resp => { console.log("Joined live feed updates", resp) })
-	  .receive("error", resp => { console.log("Unable to join", resp) })
-});
+// 	channel.join()
+// 	  .receive("ok", resp => { console.log("Joined live feed updates", resp) })
+// 	  .receive("error", resp => { console.log("Unable to join", resp) })
+// });
 
 $(function() {
 
@@ -98,8 +98,8 @@ $(function() {
 	let channel = socket.channel("live_feed:update", {"user_id": user_id});
 
 	channel.on("new_post", new_msg => {
-		console.log("new message from user with id");
-		console.log(new_msg);
+		console.log("new message received with id:");
+		console.log(new_msg["id"]);
 	})
 
 	channel.join()

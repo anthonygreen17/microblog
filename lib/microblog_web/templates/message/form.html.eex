@@ -22,14 +22,9 @@
       <%= error_tag f, :body %>
     </div>
 
-    <button id="submit-post-butt" class="btn btn-primary"
-            data-user-id="<%= @current_user.id %>">
-            Submit</button>
-
+    <div class="form-group" id="submit-post-button" >
+      <%= submit "Submit", class: "btn btn-primary" %>
+    </div>
   </div>
 
 <% end %>
-
-<button id="submit-post-button" class="btn btn-primary"
-            data-user-id="<%= @current_user.id %>">
-            SubmitPostButton</button>
