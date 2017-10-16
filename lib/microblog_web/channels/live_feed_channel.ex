@@ -4,8 +4,9 @@ defmodule MicroblogWeb.LiveFeedChannel do
   # import Microblog.Repo
   alias Microblog.Repo
 
-  def broadcast_new_post(msg_id) do
-    MicroblogWeb.Endpoint.broadcast("live_feed:update", "new_post", %{"id" => msg_id})
+  def broadcast_new_post(msg) do
+    MicroblogWeb.Endpoint.broadcast("live_feed:update", "new_post", 
+      Map.take(msg, [:id, :user_id, :updated_at, :body]))
   end
 
   def join("live_feed:update", payload, socket) do

@@ -20,7 +20,7 @@ defmodule MicroblogWeb.MessageController do
       {:ok, message} ->
 
         # broadcast the new message to all interested clients
-        LiveFeedChannel.broadcast_new_post(message.id)
+        LiveFeedChannel.broadcast_new_post(message)
         message = Microblog.Repo.preload(message, :user)
 
 

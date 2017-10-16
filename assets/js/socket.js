@@ -91,6 +91,8 @@ $(function() {
 		return;
 	}
 
+	let live_messages = [];
+
 	let renderLiveUpdate = $($("#render-live-feed-updates-template")[0]);
 	let user_id = renderLiveUpdate.data("user-id");
 
@@ -100,6 +102,9 @@ $(function() {
 	channel.on("new_post", new_msg => {
 		console.log("new message received with id:");
 		console.log(new_msg["id"]);
+		live_messages[live_messages.length] = new_msg;
+		console.log("new posts received: ");
+		console.log(live_messages.length);
 	})
 
 	channel.join()
