@@ -85,6 +85,8 @@ socket.connect()
 // 	  .receive("error", resp => { console.log("Unable to join", resp) })
 // });
 
+let handlebars = require("handlebars");
+
 $(function() {
 
 	if ( !$("#render-live-feed-updates-template").length > 0) {
@@ -94,17 +96,21 @@ $(function() {
 	let live_messages = [];
 
 	let renderLiveUpdate = $($("#render-live-feed-updates-template")[0]);
+	let updateCode = renderLiveUpdate.html(); 
+	let updateTemplate = handlebars.compile(updateCode);
 	let user_id = renderLiveUpdate.data("user-id");
+
+	let dest = $($("#render-live-feed-updates-dest")[0]);
+
 
    	// Now that you are connected, you can join channels with a topic:
 	let channel = socket.channel("live_feed:update", {"user_id": user_id});
 
 	channel.on("new_post", new_msg => {
-		console.log("new message received with id:");
-		console.log(new_msg["id"]);
 		live_messages[live_messages.length] = new_msg;
-		console.log("new posts received: ");
-		console.log(live_messages.length);
+		console.log(live_messages);
+		let html = updateTemplate({"updates": live_messages});
+		dest.html(html);
 	})
 
 	channel.join()
