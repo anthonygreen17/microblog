@@ -6,9 +6,9 @@ defmodule Microblog.ConnectionsTest do
   describe "follows" do
     alias Microblog.Connections.Follow
 
-    @valid_attrs %{}
-    @update_attrs %{}
-    @invalid_attrs %{}
+    @valid_attrs %{from_user_id: 37, to_user_id: 38}
+    @update_attrs %{from_user_id: 38, to_user_id: 37}
+    @invalid_attrs %{from_user_id: nil, to_user_id: nil}
 
     def follow_fixture(attrs \\ %{}) do
       {:ok, follow} =
@@ -64,9 +64,9 @@ defmodule Microblog.ConnectionsTest do
   describe "likes" do
     alias Microblog.Connections.Like
 
-    @valid_attrs %{}
-    @update_attrs %{}
-    @invalid_attrs %{}
+    @valid_attrs %{from_user_id: 37, to_message_id: 70}
+    @update_attrs %{from_user_id: 38, to_message_id: 71}
+    @invalid_attrs %{from_user_id: nil, to_message_id: nil}
 
     def like_fixture(attrs \\ %{}) do
       {:ok, like} =
