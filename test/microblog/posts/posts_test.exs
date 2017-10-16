@@ -6,9 +6,9 @@ defmodule Microblog.PostsTest do
   describe "messages" do
     alias Microblog.Posts.Message
 
-    @valid_attrs %{body: "some body", username: "some username"}
-    @update_attrs %{body: "some updated body", username: "some updated username"}
-    @invalid_attrs %{body: nil, username: nil}
+    @valid_attrs %{body: "some body", user_id: 37}
+    @update_attrs %{body: "some updated body", user_id: 38}
+    @invalid_attrs %{body: nil, user_id: nil}
 
     def message_fixture(attrs \\ %{}) do
       {:ok, message} =
@@ -32,7 +32,7 @@ defmodule Microblog.PostsTest do
     test "create_message/1 with valid data creates a message" do
       assert {:ok, %Message{} = message} = Posts.create_message(@valid_attrs)
       assert message.body == "some body"
-      assert message.username == "some username"
+      assert message.user_id == 37
     end
 
     test "create_message/1 with invalid data returns error changeset" do
@@ -44,7 +44,7 @@ defmodule Microblog.PostsTest do
       assert {:ok, message} = Posts.update_message(message, @update_attrs)
       assert %Message{} = message
       assert message.body == "some updated body"
-      assert message.username == "some updated username"
+      assert message.user_id == 38
     end
 
     test "update_message/2 with invalid data returns error changeset" do
