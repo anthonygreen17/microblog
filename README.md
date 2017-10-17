@@ -68,6 +68,11 @@ My `deploy.bash` script is an adaptation of NTuck's `deploy.sh` script for the `
 where `$TARGET_DIR` is the directory to deploy to. The script will prompt you to create the directory if it doesn't exist, to guard against potential accidents due to typos.
 
 
+### HW7 ###
+
+**NOTE:** Password validation and password hash handling were taken from ntuck's lecture notes on 10/16. More information on this can be found in `lib/microblog/accounts/user.ex`.
+
+
 ## Other pre-generated stuff, left here for reference ##
 To start your Phoenix server:
 
