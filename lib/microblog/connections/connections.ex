@@ -110,6 +110,13 @@ defmodule Microblog.Connections do
     Repo.get_by(Follow, from_user_id: user_from, to_user_id: user_to)
   end
 
+  def get_follows_to_user(user_to) do
+    follows = Repo.all(from f in Follow, where: f.to_user_id == ^user_to)
+    case follows do
+      nil              -> []
+      _else            -> List.flatten([follows]) # dont return a nested list
+    end
+  end
 
   alias Microblog.Connections.Like
 

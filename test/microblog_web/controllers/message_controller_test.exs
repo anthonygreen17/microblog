@@ -3,9 +3,9 @@ defmodule MicroblogWeb.MessageControllerTest do
 
   alias Microblog.Posts
 
-  @create_attrs %{body: "some body", username: "some username"}
-  @update_attrs %{body: "some updated body", username: "some updated username"}
-  @invalid_attrs %{body: nil, username: nil}
+  @create_attrs %{body: "some body", user_id: 37}
+  @update_attrs %{body: "some updated body", user_id: 38}
+  @invalid_attrs %{body: nil, user_id: nil}
 
   def fixture(:message) do
     {:ok, message} = Posts.create_message(@create_attrs)
@@ -15,14 +15,14 @@ defmodule MicroblogWeb.MessageControllerTest do
   describe "index" do
     test "lists all messages", %{conn: conn} do
       conn = get conn, message_path(conn, :index)
-      assert html_response(conn, 200) =~ "Listing Messages"
+      assert html_response(conn, 200) =~ "Feed"
     end
   end
 
   describe "new message" do
     test "renders form", %{conn: conn} do
       conn = get conn, message_path(conn, :new)
-      assert html_response(conn, 200) =~ "New Message"
+      assert html_response(conn, 200) =~ "Create Post"
     end
   end
 

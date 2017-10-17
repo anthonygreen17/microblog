@@ -7,6 +7,7 @@ import {Socket} from "phoenix"
 
 let socket = new Socket("/socket", {params: {token: window.userToken}})
 
+
 // When you connect, you'll often need to authenticate the client.
 // For example, imagine you have an authentication plug, `MyAuth`,
 // which authenticates the session and assigns a `:current_user`.
@@ -53,10 +54,43 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 
 socket.connect()
 
-// Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("topic:subtopic", {})
-channel.join()
-  .receive("ok", resp => { console.log("Joined successfully", resp) })
-  .receive("error", resp => { console.log("Unable to join", resp) })
+let handlebars = require("handlebars");
+
+$(function() {
+
+	if ( !$("#render-live-feed-updates-template").length > 0) {
+		return;
+	}
+
+	let live_messages = [];
+
+	let renderLiveUpdate = $($("#render-live-feed-updates-template")[0]);
+	let updateCode = renderLiveUpdate.html(); 
+	let updateTemplate = handlebars.compile(updateCode);
+	let user_id = renderLiveUpdate.data("user-id");
+
+	let dest = $($("#render-live-feed-updates-dest")[0]);
+
+
+   	// Now that you are connected, you can join channels with a topic:
+	let channel = socket.channel("live_feed:update:"+user_id, {"user_id": user_id});
+
+	channel.on("new_post", new_msg => {
+		new_msg["view_post_link"] = new handlebars.SafeString('<a class="btn btn-primary button-xs" href="/messages/'+ 
+									 new_msg.id + '">View Post</a>')
+
+		new_msg["view_user_link"] = new handlebars.SafeString('<a class="text-muted" href="/users/'+ 
+									 new_msg.user_id + '">@' + new_msg["username"] + '</a>')
+
+		live_messages[live_messages.length] = new_msg;
+		console.log(new_msg);
+		let html = updateTemplate({"updates": live_messages});
+		dest.html(html);
+	})
+
+	channel.join()
+	  .receive("ok", resp => { console.log("Joined live feed updates", resp) })
+	  .receive("error", resp => { console.log("Unable to join", resp) })
+});
 
 export default socket
