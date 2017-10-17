@@ -62,6 +62,6 @@ defmodule MicroblogWeb.MessageController do
 
     conn
     |> put_flash(:info, "Message deleted successfully.")
-    |> redirect(to: NavigationHistory.last_path(conn))
+    |> redirect(to: message_path(conn, :index))
   end
 end
