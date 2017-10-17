@@ -12,7 +12,6 @@
           data-message-id="<%= @message.id %>">Unlike</button>
 </script>
 
-
 <div class="card bottom-pad">
   <div class="card-body">
 

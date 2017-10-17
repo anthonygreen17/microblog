@@ -6,6 +6,31 @@
     </div>
   </div>
 
+  <script id="reviews-template" type="text/x-handlebars-template">
+  <div class="m-2">
+    <h2>Reviews</h2>
+
+    {{#each data}}
+    <div class="card w-75 m-2">
+      <div class="card-body">
+        <h6 class="">{{user_email}}</h6>
+        <div class="card-text">
+          <p>Stars: {{stars}}</p>
+          <p>{{comment}}</p>
+        </div>
+      </div>
+    </div>
+    {{else}}
+    <p>No reviews yet.</p>
+    {{/each}}
+  </div>
+</script>
+
+  <div id="render-live-feed-updates-dest">
+  &nbsp;
+  </div>
+
+
 <%= for message <- Enum.reverse(@messages) do %>
 
 <%= if (assigns[:current_user] != nil) 
@@ -23,11 +48,14 @@
         <div class="col-md-auto justify-content-left">
           <h4 class="card-title">
             <small class="text-muted">
+
+          <%# this is the same as <a class="btn btn-primary button-xs" href="/users/$ID">...  %>
               @<%= link Microblog.Accounts.get_user_by_id!(message.user_id).username, to: user_path(@conn, :show, Microblog.Accounts.get_user_by_id!(message.user_id)), class: "text-muted" %>
             </small>  
           </h4>
           <p class="card-text"><%= message.body %><br>...</p>
 
+          <%# this is the same as <a class="btn btn-primary button-xs" href="/messages/$ID">...  %>
           <%= link "View Post", to: message_path(@conn, :show, message.id), class: "btn btn-primary btn-xs"%>
           <small class="text-muted top-pad-likes left-pad-likes">
             <%= Microblog.Posts.get_message_timestamp(message) %>
@@ -47,3 +75,39 @@
 
 <span><%= link "New Message", to: message_path(@conn, :new) %></span>
 
+<script id="render-live-feed-updates-template" type="text/x-handlebars-template"
+          data-user-id="<%= @current_user.id %>">
+
+  {{#each updates}}
+
+  <div class="card bottom-pad">
+    <div class="card-body">
+
+      <div class="row">
+        <div class="post-thumbnail-pic">
+          <small>User Photo Here</small>
+        </div>
+
+        <div class="col-md-auto justify-content-left">
+          <h4 class="card-title">
+            <small>
+              {{view_user_link}}
+            </small>
+          </h4>
+          <p class="card-text">{{body}}<br>...</p>
+
+          {{view_post_link}}
+          <small class="text-muted top-pad-likes left-pad-likes">
+            {{timestamp}}
+          </small>
+
+        </div>
+
+      </div> <!-- row -->
+
+    </div>
+  </div>
+  {{else}}
+  <p>No updates yet...</p>
+  {{/each}}
+</script>

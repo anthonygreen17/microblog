@@ -115,14 +115,27 @@ defmodule Microblog.Posts do
     hour = cond do
       ua.hour == 0
         -> "12"
-      ua.hour <= 12
+      ua.hour <= 9
         -> (["0", to_string(ua.hour)]) |> Enum.join("")
-      true
+      ua.hour <= 12
+        -> to_string(ua.hour)
+      ua.hour <= 21
         -> (["0", to_string(ua.hour - 12)]) |> Enum.join("")
+      true
+        -> to_string(ua.hour - 12)
     end
 
-    [to_string(ua.month), "/", to_string(ua.day), "/", to_string(ua.year),
-     ", ", hour, ":", to_string(ua.minute), ":", to_string(ua.second), " ",
+    pad_func = fn (t) -> 
+      cond do
+        t <= 9
+          -> (["0", to_string(t)]) |> Enum.join("")
+        true
+          -> to_string(t)
+      end
+    end
+
+    [pad_func.(ua.month), "/", pad_func.(ua.day), "/", to_string(ua.year),
+     ", ", hour, ":", pad_func.(ua.minute), ":", pad_func.(ua.second), " ",
     am_or_pm]
     |> Enum.join("")
   end

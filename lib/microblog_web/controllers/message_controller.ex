@@ -3,6 +3,7 @@ defmodule MicroblogWeb.MessageController do
 
   alias Microblog.Posts
   alias Microblog.Posts.Message
+  alias MicroblogWeb.LiveFeedChannel
 
   def index(conn, _params) do
     messages = Posts.list_messages()
@@ -15,12 +16,14 @@ defmodule MicroblogWeb.MessageController do
   end
 
   def create(conn, %{"message" => message_params}) do
-    # require IEx; IEx.pry
     case Posts.create_message(message_params) do
       {:ok, message} ->
-        # cart_item = NuMart.Repo.preload(cart_item, :product)
+
+        # broadcast the new message to all interested clients
+        LiveFeedChannel.broadcast_new_post(message)
         message = Microblog.Repo.preload(message, :user)
-        # require IEx; IEx.pry
+
+
         conn
         |> put_flash(:info, "Message created successfully.")
         |> redirect(to: message_path(conn, :show, message))
