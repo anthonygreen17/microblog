@@ -31,7 +31,7 @@ defmodule Microblog.Accounts.User do
     |> cast(attrs, [:email, :username, :is_admin?,    
                     :password, :password_confirmation])
     # comes from Comeonin??
-    |> validation_confirmation(:password)
+    |> validate_confirmation(:password)
     |> validate_password(:password)
     |> put_password_hash()
     |> validate_required([:email, :username, :password_hash])
@@ -51,6 +51,14 @@ defmodule Microblog.Accounts.User do
     )
   end
 
+  def get_and_auth_user(email, password) do
+    user = Accounts.get_user_by_email(email)
+    case Comeonin.Argon2.check_pass(user, password) do
+      {:ok, user} -> user
+      _else       -> nil
+    end
+  end
+
   ########################################
   # These functions were taken from ntuck's lecture notes on 10/16 - passwords/security
   ########################################
@@ -67,7 +75,7 @@ defmodule Microblog.Accounts.User do
   end
 
   # pattern match an invalid changeset
-  def put_pass_hash(changeset), do: changeset
+  def put_password_hash(changeset), do: changeset
 
   def valid_password?(password) when byte_size(password) > 7 do
     {:ok, password}
