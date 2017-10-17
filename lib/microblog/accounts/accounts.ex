@@ -102,15 +102,11 @@ defmodule Microblog.Accounts do
     User.changeset(user, %{})
   end
 
-  def get_user_by_email!(email) do
-    Repo.get_by(User, email: email)
-  end
-
   def get_user_by_email(email) do
     Repo.get_by(User, email: email)
   end
 
-  def get_user_by_username!(username) do
+  def get_user_by_username(username) do
     Repo.get_by(User, username: username)
   end
 

@@ -53,8 +53,25 @@ defmodule Microblog.Accounts.User do
     )
   end
 
-  def get_and_auth_user(email, password) do
-    user = Accounts.get_user_by_email(email)
+
+  @doc """
+  Get a user either by username or by email. Verify their password.
+
+  """
+  def get_and_auth_user(username_or_email, password) do
+    user_by_email = Accounts.get_user_by_email(username_or_email)
+    user_by_username = Accounts.get_user_by_username(username_or_email)
+
+    user = 
+    cond do
+      user_by_email != nil ->
+        user_by_email
+      user_by_username != nil ->
+        user_by_username
+      true ->
+        nil
+    end
+
     case Comeonin.Argon2.check_pass(user, password) do
       {:ok, user} -> user
       _else       -> nil

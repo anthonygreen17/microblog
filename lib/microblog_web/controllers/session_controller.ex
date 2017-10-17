@@ -10,10 +10,8 @@ defmodule MicroblogWeb.SessionController do
   # Allow users to login with either their email or their username
 
   # does the "user" map need to be here? or can we pattern match the inner map...
-  def login(conn, %{"user" => %{"email" => email, "password" => password}}) do
-    user = User.get_and_auth_user(email, password)
-    # user_by_email = Accounts.get_user_by_email!(username_or_email)
-    # user_by_username = Accounts.get_user_by_username!(username_or_email)
+  def login(conn, %{"user" => %{"username_or_email" => username_or_email, "password" => password}}) do
+    user = User.get_and_auth_user(username_or_email, password)
 
     cond do
 
