@@ -3,6 +3,8 @@ defmodule Microblog.Accounts.User do
   import Ecto.Changeset
   alias Microblog.Accounts.User
 
+  alias Microblog.Accounts
+
 
   schema "users" do
     field :email, :string
