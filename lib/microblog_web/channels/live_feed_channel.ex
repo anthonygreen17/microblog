@@ -1,12 +1,16 @@
 defmodule MicroblogWeb.LiveFeedChannel do
   use MicroblogWeb, :channel
 
-  # import Microblog.Repo
-  alias Microblog.Repo
+  alias Microblog.Posts
+  alias Microblog.Accounts
 
+  # add the message timestamp as well as the username to the message, extract those
+  # fields into a map, send the payload
   def broadcast_new_post(msg) do
-    MicroblogWeb.Endpoint.broadcast("live_feed:update", "new_post", 
-      Map.take(msg, [:id, :user_id, :updated_at, :body]))
+    payload = Map.take(msg, [:id, :user_id, :updated_at, :body])
+    payload = Map.put(payload, :username, Accounts.get_user_by_id!(msg.user_id).username)
+    payload = Map.put(payload, :timestamp, Posts.get_message_timestamp(msg))
+    MicroblogWeb.Endpoint.broadcast("live_feed:update", "new_post", payload)
   end
 
   def join("live_feed:update", payload, socket) do

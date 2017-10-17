@@ -6,9 +6,6 @@
     </div>
   </div>
 
-  
-
-
   <script id="reviews-template" type="text/x-handlebars-template">
   <div class="m-2">
     <h2>Reviews</h2>
@@ -51,11 +48,14 @@
         <div class="col-md-auto justify-content-left">
           <h4 class="card-title">
             <small class="text-muted">
+
+          <%# this is the same as <a class="btn btn-primary button-xs" href="/users/$ID">...  %>
               @<%= link Microblog.Accounts.get_user_by_id!(message.user_id).username, to: user_path(@conn, :show, Microblog.Accounts.get_user_by_id!(message.user_id)), class: "text-muted" %>
             </small>  
           </h4>
           <p class="card-text"><%= message.body %><br>...</p>
 
+          <%# this is the same as <a class="btn btn-primary button-xs" href="/messages/$ID">...  %>
           <%= link "View Post", to: message_path(@conn, :show, message.id), class: "btn btn-primary btn-xs"%>
           <small class="text-muted top-pad-likes left-pad-likes">
             <%= Microblog.Posts.get_message_timestamp(message) %>
@@ -90,11 +90,15 @@
 
         <div class="col-md-auto justify-content-left">
           <h4 class="card-title">
-            <small class="text-muted">
+            <small>
+              {{view_user_link}}
+            </small>
           </h4>
           <p class="card-text">{{body}}<br>...</p>
+
+          {{view_post_link}}
           <small class="text-muted top-pad-likes left-pad-likes">
-            Some Time ago...
+            {{timestamp}}
           </small>
 
         </div>

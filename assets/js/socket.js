@@ -54,37 +54,6 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 
 socket.connect()
 
-
-
-// function for handling when we are on the message show page
-// $(function() {
-
-// 	if (!$("#submit-post-button").length > 0) {
-// 		return;
-// 	}
-
-// 	let submitPostButton = $($("#submit-post-button")[0]);
-// 	console.log("setting up the post submit button");
-// 	// let user_id = submitPostButton.data("user-id");
-
-// 	// function send_new_post_update() {
-// 	// 	console.log("sending pushed button data");
-// 	// 	channel.push("new_post", {user_id: submitPostButton.data("user-id")});
-// 	// 
-
-// 	// submitPostButton.click(send_new_post_update);
-
-// 	let channel = socket.channel("live_feed:update", {"user_id": user_id});
-// 	channel.on("new_post", new_msg => {
-// 		console.log("new message from user with id");
-// 		console.log(new_msg);
-// 	})
-
-// 	channel.join()
-// 	  .receive("ok", resp => { console.log("Joined live feed updates", resp) })
-// 	  .receive("error", resp => { console.log("Unable to join", resp) })
-// });
-
 let handlebars = require("handlebars");
 
 $(function() {
@@ -107,8 +76,14 @@ $(function() {
 	let channel = socket.channel("live_feed:update", {"user_id": user_id});
 
 	channel.on("new_post", new_msg => {
+		new_msg["view_post_link"] = new handlebars.SafeString('<a class="btn btn-primary button-xs" href="/messages/'+ 
+									 new_msg.id + '">View Post</a>')
+
+		new_msg["view_user_link"] = new handlebars.SafeString('<a class="text-muted" href="/users/'+ 
+									 new_msg.user_id + '">@' + new_msg["username"] + '</a>')
+
 		live_messages[live_messages.length] = new_msg;
-		console.log(live_messages);
+		console.log(new_msg);
 		let html = updateTemplate({"updates": live_messages});
 		dest.html(html);
 	})
