@@ -73,7 +73,7 @@ $(function() {
 
 
    	// Now that you are connected, you can join channels with a topic:
-	let channel = socket.channel("live_feed:update", {"user_id": user_id});
+	let channel = socket.channel("live_feed:update:"+user_id, {"user_id": user_id});
 
 	channel.on("new_post", new_msg => {
 		new_msg["view_post_link"] = new handlebars.SafeString('<a class="btn btn-primary button-xs" href="/messages/'+ 

@@ -3,6 +3,13 @@ defmodule MicroblogWeb.LiveFeedChannel do
 
   alias Microblog.Posts
   alias Microblog.Accounts
+  alias Microblog.Connections
+
+  def get_channels_to_post(posting_user_id) do
+    follows = Connections.get_follows_to_user(posting_user_id)
+    user_ids = Enum.map(follows, fn(f)-> f.from_user_id end)
+    Enum.map(user_ids, fn(i) -> (["live_feed:update:", to_string(i)]) |> Enum.join("") end)
+  end
 
   # add the message timestamp as well as the username to the message, extract those
   # fields into a map, send the payload
@@ -11,9 +18,12 @@ defmodule MicroblogWeb.LiveFeedChannel do
     payload = Map.put(payload, :username, Accounts.get_user_by_id!(msg.user_id).username)
     payload = Map.put(payload, :timestamp, Posts.get_message_timestamp(msg))
     MicroblogWeb.Endpoint.broadcast("live_feed:update", "new_post", payload)
+
+    Enum.map(get_channels_to_post(msg.user_id), fn(chan_name) -> 
+      MicroblogWeb.Endpoint.broadcast(chan_name, "new_post", payload) end)
   end
 
-  def join("live_feed:update", payload, socket) do
+  def join("live_feed:update" <> user_id, payload, socket) do
 
     if authorized?(payload) do
       # socket = assign(socket, :user_id, Map.get(payload, "user_id"))
