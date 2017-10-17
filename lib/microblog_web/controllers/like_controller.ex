@@ -26,8 +26,6 @@ defmodule MicroblogWeb.LikeController do
     render(conn, "index.json", likes: likes)
   end
 
-  
-
   def create(conn, %{"like" => like_params}) do
     with {:ok, %Like{} = like} <- Connections.create_like(like_params) do
       conn

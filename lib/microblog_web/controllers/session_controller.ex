@@ -19,7 +19,7 @@ defmodule MicroblogWeb.SessionController do
         conn
         |> put_session(:user_id, user.id)
         |> put_flash(:info, "Logged in as #{user.username}")
-        |> redirect(to: user_path(conn, :index))
+        |> redirect(to: message_path(conn, :index))
       true ->
         conn
         |> put_session(:user_id, nil)
