@@ -72,6 +72,10 @@ where `$TARGET_DIR` is the directory to deploy to. The script will prompt you to
 
 **NOTE:** Password validation and password hash handling were taken from ntuck's lecture notes on 10/16. More information on this can be found in `lib/microblog/accounts/user.ex`.
 
+#### Admin user ####
+
+The first created user will be the one and only `admin`. This allows him/her to delete and edit other's profiles, as well as delete their posts. The admin is not allowed to create posts for others or change their followers, since that seems weird.
+
 
 ## Other pre-generated stuff, left here for reference ##
 To start your Phoenix server:
