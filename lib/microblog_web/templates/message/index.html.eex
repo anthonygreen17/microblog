@@ -1,6 +1,6 @@
 <div class="container">
 
-  <div class="row bottom-pad top-pad">
+  <div class="row top-pad">
     <div class="col">
       <h2>Feed</h2>
     </div>
@@ -30,6 +30,9 @@
   &nbsp;
   </div>
 
+<%= render MicroblogWeb.MessageView, "form.html", 
+changeset: Microblog.Posts.change_message(%Microblog.Posts.Message{}), 
+action: message_path(@conn, :create), current_user: @current_user %>
 
 <%= for message <- Enum.reverse(@messages) do %>
 
