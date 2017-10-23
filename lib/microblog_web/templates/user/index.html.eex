@@ -27,7 +27,7 @@
 
       <div class="row">
         <div class="post-thumbnail-pic">
-          <img src="<%= Microblog.Avatar.url({user.avatar, user}) %>"/>
+          <img src="<%= Microblog.Avatar.get_file_path_thumb(user) %>"/>
         </div>
 
         <div class="col-md-auto justify-content-left">

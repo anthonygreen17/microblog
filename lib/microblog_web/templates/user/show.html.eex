@@ -4,7 +4,7 @@
   <!-- this card will contain the user's picture -->
 
   <div class="card text-center" id="user-show-header" >
-    <img class="card-img-top img-thumbnail" src="/images/rick_morty.jpeg" alt="profile picture here">
+    <img class="card-img-top img-thumbnail" src="<%= Microblog.Avatar.get_file_path_original(@user) %>" alt="profile picture here">
     <div class="card-body">
 
       <h4 class="card-title text-muted">
@@ -77,7 +77,7 @@
 
       <div class="row">
         <div class="post-thumbnail-pic">
-          <small>User Photo Here</small>
+          <img src="<%= Microblog.Avatar.get_file_path_thumb(Microblog.Accounts.get_user_by_id!(message.user_id)) %>"/>
         </div>
 
         <div class="col-md-auto justify-content-left">

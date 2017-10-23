@@ -72,9 +72,18 @@ where `$TARGET_DIR` is the directory to deploy to. The script will prompt you to
 
 **NOTE:** Password validation and password hash handling were taken from ntuck's lecture notes on 10/16. More information on this can be found in `lib/microblog/accounts/user.ex`.
 
+
+#### HTTPS ####
+
+`Certbot` is ur friend and greatly simplified this process for me. Check out https://microblog.anthonygreen17.com 
+
 #### Admin user ####
 
 The first created user will be the one and only `admin`. This allows him/her to delete and edit other's profiles, as well as delete their posts. The admin is not allowed to create posts for others or change their followers, since that seems weird.
+
+#### Profile Photos ####
+
+I brought it `arc` and `arc_ecto` to help me out in adding user profile photos. The user photo thumbnail is showed on the feed page as well as the user index page. The original version of the photo is rendered in a larger fashion on the user show page. Getting `arc` to NOT compress both (resulting in crappy resolution) was a pain!
 
 
 ## Other pre-generated stuff, left here for reference ##

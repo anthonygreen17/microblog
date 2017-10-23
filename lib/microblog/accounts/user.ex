@@ -44,6 +44,7 @@ defmodule Microblog.Accounts.User do
     |> validate_password(:password)
     |> put_password_hash()
     |> validate_required([:email, :username, :password_hash, :avatar])
+    |> unique_constraint(:email, message: "Email already taken")
   end
 
   # Password validation
