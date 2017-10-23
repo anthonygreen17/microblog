@@ -54,7 +54,7 @@
       <%= if @current_user do %>
 
         <span class="text-light">
-          <%= @current_user.email %>
+          @<%= @current_user.username %>
           <%= link("logout", to: session_path(@conn, :logout), method: :delete) %>
         </span>
 

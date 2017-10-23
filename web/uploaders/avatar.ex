@@ -35,13 +35,15 @@ defmodule Microblog.Avatar do
   #   version
   # end
 
-  # files will be saved in /priv/static/avatars/$FILENAME, but we need to access them as
-  # /avatars/$FILENAME
+  # files will be saved in /priv/static/avatars/$VERSION/$FILENAME, but we need to access 
+  # them as /avatars/$VERSION/$FILENAME
   def get_file_path_original(user) do
     abs_url = Avatar.url({user.avatar, user})
     split_url = String.split(abs_url, "/")
     list_length = length(split_url)
-    "/avatars/" <> Enum.at(split_url, list_length - 2) <> "/" <> Enum.at(split_url, list_length - 1)
+    "/avatars/" <> Enum.at(split_url, list_length - 2) 
+                <> "/" 
+                <> Enum.at(split_url, list_length - 1)
   end
 
   def get_file_path_thumb(user) do
@@ -49,7 +51,9 @@ defmodule Microblog.Avatar do
     abs_url = Avatar.url({user.avatar, user}, :thumb)
     split_url = String.split(abs_url, "/")
     list_length = length(split_url)
-    "/avatars/" <> Enum.at(split_url, list_length - 2) <> "/" <> Enum.at(split_url, list_length - 1)
+    "/avatars/" <> Enum.at(split_url, list_length - 2) 
+                <> "/"
+                <> Enum.at(split_url, list_length - 1)
   end
 
   # Override the storage directory:

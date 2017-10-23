@@ -11,8 +11,6 @@
         @<%= @user.username %>  
       </h4>
 
-      <p class="card-text"><small>Sample rendering of a user's page...maybe this section could include a small bio?
-        A quote maybe?</small></p>
     </div>
   </div>
 
@@ -62,9 +60,7 @@
 
   <div class="row bottom-pad">
     <div class="col">
-      <h2>Feed</h2>
-      <p class="left-pad">This will eventually show all posts which the user themselves has posted, as well as posts
-      in which the user is mentioned.</p>
+      <h2>Personal Feed</h2>
 
       <%= for message <- Enum.reverse(@user.messages) do %>
 
