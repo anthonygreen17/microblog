@@ -4,7 +4,7 @@ defmodule Microblog.Accounts.User do
   alias Microblog.Accounts.User
 
   alias Microblog.Accounts
-
+  use Arc.Ecto.Schema
 
   schema "users" do
     field :email, :string
@@ -24,19 +24,26 @@ defmodule Microblog.Accounts.User do
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true  
 
+    field :avatar, Microblog.Avatar.Type
+
     timestamps()
   end
+
+  # for arc_ecto
+  @required_file_fields ~w()
+  @optional_file_fields ~w(avatar)
 
   @doc false
   def changeset(%User{} = user, attrs) do
     user
     |> cast(attrs, [:email, :username, :is_admin?,    
-                    :password, :password_confirmation])
+                    :password, :password_confirmation, :avatar])
+    |> cast_attachments(attrs, @required_file_fields, @optional_file_fields)
     # comes from Comeonin??
     |> validate_confirmation(:password)
     |> validate_password(:password)
     |> put_password_hash()
-    |> validate_required([:email, :username, :password_hash])
+    |> validate_required([:email, :username, :password_hash, :avatar])
   end
 
   # Password validation
