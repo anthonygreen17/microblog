@@ -19,6 +19,7 @@ defmodule Microblog.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [
+#      applications: [:arc_ecto],
       mod: {Microblog.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
@@ -26,7 +27,7 @@ defmodule Microblog.Mixfile do
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(_),     do: ["lib"]
+  defp elixirc_paths(_),     do: ["lib", "web"]
 
   # Specifies your project dependencies.
   #
@@ -45,6 +46,8 @@ defmodule Microblog.Mixfile do
       {:navigation_history, "~> 0.0"},
       {:comeonin, "~> 4.0"},
       {:argon2_elixir, "~> 1.2"},
+      {:arc_ecto, "~> 0.7.0"},
+      {:arc, "~> 0.8.0"},
     ]
   end
 

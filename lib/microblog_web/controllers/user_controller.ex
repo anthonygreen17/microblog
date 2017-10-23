@@ -15,6 +15,11 @@ defmodule MicroblogWeb.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
+    user_params = 
+      case (length Accounts.list_users()) do
+        0 -> Map.put(user_params, "is_admin?", true)
+        _ -> user_params
+      end
     case Accounts.create_user(user_params) do
       {:ok, user} ->
         conn

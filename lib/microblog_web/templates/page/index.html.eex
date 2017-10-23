@@ -1,3 +1,28 @@
-  <div class="jumbotron">
+<div class="jumbotron">
     <h2 class="text-center"><%= gettext "Welcome to %{name}!", name: "Microblog" %></h2>
-  </div>
+    <h6 class="text-center">Like a blog, but a bit teenier...</h5>
+
+    <h2 class="text-center">&nbsp;</h2>
+    <div class="row text-center justify-content-center">
+	    <h4 class="text-center">Don't have an account?</h4>
+	</div>
+
+    <div class="row text-center justify-content-center">
+	  	<%= link "Sign Up", to: user_path(@conn, :new), class: "btn btn-primary"%>
+	</div>
+
+    <h4 class="text-center">&nbsp;</h4>
+
+    <div class="row text-center justify-content-center">
+	    <h4 class="text-center">Oh, ya got one??</h4>
+	</div>
+
+    <div class="row text-center justify-content-center">
+    	<%= form_for @conn, session_path(@conn, :login), [as: "user", class: "form-inline"], fn f -> %>
+          	<%= text_input f, :username_or_email,  placeholder: "username/email", class: "form-control" %>
+          	<%= password_input f, :password, placeholder: "password", class: "form-control" %>
+          	<%= submit "Log in", class: "btn btn-primary" %>
+	 	<% end %>
+	</div>
+
+</div>

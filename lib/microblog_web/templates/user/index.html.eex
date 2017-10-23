@@ -16,7 +16,7 @@
   <!-- display the results feed below the search bar -->
   <div class="row bottom-pad">
     <div class="col">
-      <h2>Results</h2>
+      <h2>All Users</h2>
     </div>
   </div>
 
@@ -27,7 +27,7 @@
 
       <div class="row">
         <div class="post-thumbnail-pic">
-          <small>User Photo Here</small>
+          <img src="<%= Microblog.Avatar.get_file_path_thumb(user) %>"/>
         </div>
 
         <div class="col-md-auto justify-content-left">

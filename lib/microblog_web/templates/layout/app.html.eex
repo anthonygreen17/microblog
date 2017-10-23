@@ -54,7 +54,7 @@
       <%= if @current_user do %>
 
         <span class="text-light">
-          <%= @current_user.email %>
+          @<%= @current_user.username %>
           <%= link("logout", to: session_path(@conn, :logout), method: :delete) %>
         </span>
 
@@ -64,7 +64,7 @@
 
         <%= form_for @conn, session_path(@conn, :login), [as: "user", class: "form-inline"], fn f -> %>
           <%= text_input f, :username_or_email,  placeholder: "username/email", class: "form-control" %>
-          <%= text_input f, :password, placeholder: "password", class: "form-control" %>
+          <%= password_input f, :password, placeholder: "password", class: "form-control" %>
           <%= submit "Log in", class: "btn btn-primary" %>
           <%= link "Sign Up", to: user_path(@conn, :new), class: "btn btn-primary" %>
         <% end %>

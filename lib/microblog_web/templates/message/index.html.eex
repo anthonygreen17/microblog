@@ -45,7 +45,7 @@ action: message_path(@conn, :create), current_user: @current_user %>
 
       <div class="row">
         <div class="post-thumbnail-pic">
-          <small>User Photo Here</small>
+          <img src="<%= Microblog.Avatar.get_file_path_thumb(Microblog.Accounts.get_user_by_id!(message.user_id)) %>"/>
         </div>
 
         <div class="col-md-auto justify-content-left">
