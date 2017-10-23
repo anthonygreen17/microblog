@@ -4,15 +4,13 @@
   <!-- this card will contain the user's picture -->
 
   <div class="card text-center" id="user-show-header" >
-    <img class="card-img-top img-thumbnail" src="/images/rick_morty.jpeg" alt="profile picture here">
+    <img class="card-img-top img-thumbnail" src="<%= Microblog.Avatar.get_file_path_original(@user) %>" alt="profile picture here">
     <div class="card-body">
 
       <h4 class="card-title text-muted">
         @<%= @user.username %>  
       </h4>
 
-      <p class="card-text"><small>Sample rendering of a user's page...maybe this section could include a small bio?
-        A quote maybe?</small></p>
     </div>
   </div>
 
@@ -23,35 +21,37 @@
       <%= if (assigns[:current_user] != nil) and (@current_user.id == @user.id) do %>
 
         <%= button("Create Post", to: message_path(@conn, :new), method: "get", class: "btn btn-primary") %>
+
+      <% end %>
+
+      <%= if (((assigns[:current_user] != nil) and (@current_user.id == @user.id))
+            or @current_user.is_admin?) do %>
+
         <%= link "Delete Profile", to: user_path(@conn, :delete, @user), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
         <%= link "Edit Profile", to: user_path(@conn, :edit, @user), class: "btn btn-xs btn-primary" %>
 
-      <% else %>
+      <% end %>
 
-        <%# Comments - they are discarded from source %>
-        <%= if (assigns[:current_user] != nil) and (@current_user.id != @user.id)  do %>
+      <%# Comments - they are discarded from source %>
+      <%= if (assigns[:current_user] != nil) and (@current_user.id != @user.id)  do %>
 
-            <%= if Microblog.Connections.user_is_following_user?(@current_user.id, @user.id) do %>
+          <%= if Microblog.Connections.user_is_following_user?(@current_user.id, @user.id) do %>
 
-              <%= form_for @conn, follow_path(@conn, :delete, Microblog.Connections.get_follow_user_to_user!(@current_user.id, @user.id).id), [ method: :delete, as: "follow" ], fn f -> %>
-                <%= hidden_input f, :from_user_id, value: @current_user.id %>
-                <%= hidden_input f, :to_user_id, value: @user.id %>
-                <%= submit "Unfollow", class: "btn btn-danger" %>
-              <% end %>
+            <%= form_for @conn, follow_path(@conn, :delete, Microblog.Connections.get_follow_user_to_user!(@current_user.id, @user.id).id), [ method: :delete, as: "follow" ], fn f -> %>
+              <%= hidden_input f, :from_user_id, value: @current_user.id %>
+              <%= hidden_input f, :to_user_id, value: @user.id %>
+              <%= submit "Unfollow", class: "btn btn-danger" %>
+            <% end %>
 
+          <% else %>
 
-            <% else %>
-
-              <%= form_for @conn, follow_path(@conn, :create), [as: "follow" ], fn f -> %>
-                <%= hidden_input f, :from_user_id, value: @current_user.id %>
-                <%= hidden_input f, :to_user_id, value: @user.id %>
-                <%= submit "Follow", class: "btn btn-primary" %>
-              <% end %>
-
+            <%= form_for @conn, follow_path(@conn, :create), [as: "follow" ], fn f -> %>
+              <%= hidden_input f, :from_user_id, value: @current_user.id %>
+              <%= hidden_input f, :to_user_id, value: @user.id %>
+              <%= submit "Follow", class: "btn btn-primary" %>
             <% end %>
 
           <% end %>
-
       <% end %>
     </div>
   </div>
@@ -60,9 +60,7 @@
 
   <div class="row bottom-pad">
     <div class="col">
-      <h2>Feed</h2>
-      <p class="left-pad">This will eventually show all posts which the user themselves has posted, as well as posts
-      in which the user is mentioned.</p>
+      <h2>Personal Feed</h2>
 
       <%= for message <- Enum.reverse(@user.messages) do %>
 
@@ -75,7 +73,7 @@
 
       <div class="row">
         <div class="post-thumbnail-pic">
-          <small>User Photo Here</small>
+          <img src="<%= Microblog.Avatar.get_file_path_thumb(Microblog.Accounts.get_user_by_id!(message.user_id)) %>"/>
         </div>
 
         <div class="col-md-auto justify-content-left">
